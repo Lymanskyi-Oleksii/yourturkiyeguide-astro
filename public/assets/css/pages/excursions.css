@@ -1,0 +1,184 @@
+.card-container {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.clickable-link {
+  text-decoration: none;
+  display: block;
+  color: inherit;
+  /* Додаємо флекс-властивості для рівномірного розподілу */
+  flex: 1;
+  min-width: 280px;
+  max-width: 320px;
+}
+
+.card {
+  width: 100%;
+  height: 420px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  color: var(--white);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 30%, transparent 60%);
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.card:hover::before {
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.2) 70%);
+}
+
+.card-content {
+  position: relative;
+  width: 100%;
+  z-index: 2;
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.card h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 600;
+  transition: transform 0.3s ease, color 0.3s ease;
+  color: var(--white);
+  flex: 1;
+}
+
+.card:hover h1 {
+  transform: translateY(-5px);
+  color: var(--hover-color);
+}
+
+.arrow-button {
+  color: var(--white);
+  background: var(--accent, #ff6b00);
+  border: none;
+  padding: 12px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .arrow-button {
+  background: var(--hover-color, #ffcc80);
+  transform: scale(1.1);
+}
+
+.card:hover .arrow {
+  transform: translateX(5px);
+}
+
+/* Адаптивність для планшетів */
+@media (max-width: 1024px) {
+  .card-container {
+    gap: 25px;
+    padding: 30px 15px;
+    justify-content: center;
+  }
+
+  .clickable-link {
+    min-width: 260px;
+    max-width: 300px;
+  }
+}
+
+/* Адаптивність для мобільних пристроїв */
+@media (max-width: 768px) {
+  .card-container {
+    gap: 20px;
+    padding: 20px 15px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .clickable-link {
+    width: 100%;
+    max-width: 100%;
+    min-width: unset;
+  }
+
+  .card {
+    height: 350px;
+    margin: 0 auto;
+  }
+
+  .card-content {
+    padding: 20px;
+  }
+
+  .card h1 {
+    font-size: 1.3rem;
+  }
+
+  .arrow-button {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+}
+
+/* Для дуже маленьких екранів */
+@media (max-width: 480px) {
+  .card-container {
+    padding: 15px 10px;
+    gap: 15px;
+  }
+
+  .card {
+    height: 420px;
+  }
+
+  .card-content {
+    padding: 15px;
+  }
+
+  .card h1 {
+    font-size: 1.2rem;
+  }
+
+  .arrow-button {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}

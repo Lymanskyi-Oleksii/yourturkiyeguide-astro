@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TourReviews from '../components/tour/TourReviews.astro';
+---
+<BaseLayout title="Отзывы" description="Отзывы клиентов о экскурсиях по Турции с гидом Фыратом Динлером.">
+    <Fragment slot="head">
+        <link rel="stylesheet" href="/assets/css/pages/reviews.css">
+    </Fragment>
+
+    <section>
+        <div class="container">
+            <article>
+                <TourReviews category="general" categoryDisplayName="Загальні відгуки" />
+            </article>
+        </div>
+    </section>
+</BaseLayout>

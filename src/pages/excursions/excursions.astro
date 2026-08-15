@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategoryCard from '../../components/CategoryCard.astro';
+
+const categories = [
+    {
+        href: '/excursions/personalised',
+        image: '/assets/img/ferat/obzor.webp',
+        title: 'Индивидуальные экскурсии',
+    },
+    {
+        href: '/excursions/group',
+        image: '/assets/img/transit/1.webp',
+        title: 'Групповые экскурсии',
+    },
+    {
+        href: '/excursions/copyright',
+        image: '/assets/img/hello/4.webp',
+        title: 'Авторские туры',
+    },
+];
+---
+<BaseLayout title="Экскурсии" description="Индивидуальные, групповые и авторские экскурсии по Турции с профессиональным гидом.">
+    <Fragment slot="head">
+        <link rel="stylesheet" href="/assets/css/pages/excursions.css">
+    </Fragment>
+
+    <section>
+        <div class="container">
+            <article class="container-article">
+                <div class="card-container">
+                    {categories.map((cat) => <CategoryCard {...cat} />)}
+                </div>
+            </article>
+        </div>
+    </section>
+</BaseLayout>

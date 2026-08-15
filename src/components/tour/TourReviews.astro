@@ -1,0 +1,76 @@
+---
+interface Props {
+    category: string;
+    categoryDisplayName: string;
+}
+const { category, categoryDisplayName } = Astro.props;
+---
+<div class="reviews-container">
+    <div class="reviews-section">
+        <h2 class="reviews-section-title">Отзывы клиентов</h2>
+        <p class="reviews-section-subtitle">Узнайте, что думают наши клиенты о наших услугах</p>
+
+        <div class="reviews-stats">
+            <div class="reviews-stat-card">
+                <div class="reviews-stat-number" id="totalReviews">0</div>
+                <div class="reviews-stat-label">Всего отзывов</div>
+            </div>
+            <div class="reviews-stat-card">
+                <div class="reviews-stat-number" id="averageRating">0.0</div>
+                <div class="reviews-stat-label">Средний рейтинг</div>
+            </div>
+            <div class="reviews-stat-card">
+                <div class="reviews-stat-number" id="fiveStarCount">0</div>
+                <div class="reviews-stat-label">5-звездочных отзывов</div>
+            </div>
+        </div>
+
+        <form class="reviews-add-form" id="reviewForm">
+            <h3 class="reviews-form-title">Оставить отзыв</h3>
+            <div class="reviews-form-group">
+                <label class="reviews-form-label" for="reviewerName">Ваше имя *</label>
+                <input type="text" id="reviewerName" class="reviews-form-input" required maxlength="50">
+            </div>
+            <div class="reviews-form-group">
+                <label class="reviews-form-label" for="reviewerEmail">Email (не будет опубликовано)</label>
+                <input type="email" id="reviewerEmail" class="reviews-form-input" maxlength="100">
+            </div>
+            <div class="reviews-form-group">
+                <label class="reviews-form-label">Рейтинг *</label>
+                <div class="reviews-rating-input" id="ratingInput">
+                    <span class="reviews-star" data-rating="1">★</span>
+                    <span class="reviews-star" data-rating="2">★</span>
+                    <span class="reviews-star" data-rating="3">★</span>
+                    <span class="reviews-star" data-rating="4">★</span>
+                    <span class="reviews-star" data-rating="5">★</span>
+                </div>
+            </div>
+            <div class="reviews-form-group">
+                <label class="reviews-form-label" for="reviewText">Ваш отзыв *</label>
+                <textarea id="reviewText" class="reviews-form-textarea" required maxlength="500" placeholder="Поделитесь своим опытом..."></textarea>
+            </div>
+            <button type="submit" class="reviews-submit-btn">Опубликовать отзыв</button>
+        </form>
+
+        <div class="reviews-grid" id="reviewsContainer">
+            <div class="reviews-empty-state">
+                <div class="reviews-empty-state-icon">💬</div>
+                <h3>Пока что нет отзывов</h3>
+                <p>Будьте первым, кто оставит отзыв!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script is:inline type="module" define:vars={{ category, categoryDisplayName }}>
+    import('/assets/js/pages/reviews.js').then(() => {
+        function init() {
+            new ReviewsSystem({ category, categoryDisplayName });
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    });
+</script>

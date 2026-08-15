@@ -1,0 +1,16 @@
+<div class="photo-fullscreen-overlay" id="photoFullscreenOverlay">
+    <div class="photo-fullscreen-content">
+        <button class="photo-close-button" onclick="closeFullscreen()">×</button>
+        <button class="photo-fullscreen-nav photo-nav-prev" onclick="navigateFullscreen(-1)">‹</button>
+        <button class="photo-fullscreen-nav photo-nav-next" onclick="navigateFullscreen(1)">›</button>
+        <div class="photo-fullscreen-main" id="photoFullscreenMain">
+            <div class="photo-placeholder">
+                <span>📷</span>
+                <span>Загрузка изображения...</span>
+            </div>
+        </div>
+        <div class="photo-fullscreen-counter">
+            <span id="photoFullscreenCurrent">1</span> / <span id="photoFullscreenTotal">3</span>
+        </div>
+    </div>
+</div>

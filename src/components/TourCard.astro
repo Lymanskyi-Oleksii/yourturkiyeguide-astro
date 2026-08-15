@@ -1,0 +1,43 @@
+---
+interface Props {
+    basePath: string;
+    slug: string;
+    title: string;
+    description: string;
+    image: string;
+    durationValue: string;
+    durationLabel: string;
+    price: number;
+    priceLabel: string;
+    category: string;
+    ratingCategory: string;
+}
+
+const { basePath, slug, title, description, image, durationValue, durationLabel, price, priceLabel, category, ratingCategory } = Astro.props;
+---
+<a href={`${basePath}/${slug}`} class="clickable-link">
+    <div
+            class="card"
+            style={`background-image: url('${image}');`}
+            data-title={title}
+            data-description={description}
+            data-duration={durationValue}
+            data-price={price}
+            data-category={category}
+    >
+        <div class="card-rating" data-category={ratingCategory}>
+            <span class="rating-loading">Завантаження…</span>
+        </div>
+        <div class="card-content">
+            <div class="card-text">
+                <h1>{title}</h1>
+                <p>{description}</p>
+            </div>
+            <div class="info-button">
+                <div class="duration">{durationLabel}</div>
+                <div class="price">{priceLabel}</div>
+                <span class="arrow">→</span>
+            </div>
+        </div>
+    </div>
+</a>

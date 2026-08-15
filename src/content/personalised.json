@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "hello",
+    "title": "Привет, Стамбул!",
+    "description": "Главные достопримечательности города на легкой экскурсии",
+    "image": "/assets/img/hello/1.webp",
+    "durationValue": "4",
+    "durationLabel": "⏱️ 4ч",
+    "price": 180,
+    "priceLabel": "€180",
+    "category": "историческая",
+    "ratingCategory": "istanbul"
+  },
+  {
+    "slug": "colourful",
+    "title": "Колоритный Стамбул",
+    "description": "Увидеть разные грани прекрасного города",
+    "image": "/assets/img/colorful/1.webp",
+    "durationValue": "3,5",
+    "durationLabel": "⏱️ 3,5ч",
+    "price": 155,
+    "priceLabel": "€155",
+    "category": "мистецька",
+    "ratingCategory": "colourful"
+  },
+  {
+    "slug": "transit",
+    "title": "Транзитный Стамбул",
+    "description": "Не скучать в аэропорту и увидеть самое главное",
+    "image": "/assets/img/transit/4.webp",
+    "durationValue": "5",
+    "durationLabel": "⏱️ 5ч",
+    "price": 240,
+    "priceLabel": "€240",
+    "category": "историческая",
+    "ratingCategory": "tranzit"
+  },
+  {
+    "slug": "sophisticated",
+    "title": "Изысканный Стамбул",
+    "description": "Aбсолютное погружение в мир утонченной истории",
+    "image": "/assets/img/sophisticated/2.webp",
+    "durationValue": "5",
+    "durationLabel": "⏱️ 5ч",
+    "price": 120,
+    "priceLabel": "€120",
+    "category": "историческая",
+    "ratingCategory": "sophisticated"
+  },
+  {
+    "slug": "stambul",
+    "title": "Стамбул — мост между Европой и Азией",
+    "description": "Экскурсия по двум континентам с видами на Босфор и главными символами города",
+    "image": "/assets/img/stambul/1.webp",
+    "durationValue": "6",
+    "durationLabel": "⏱️ 5-6ч",
+    "price": 300,
+    "priceLabel": "€300",
+    "category": "историческая",
+    "ratingCategory": "stambul"
+  },
+  {
+    "slug": "bosphorus",
+    "title": "По волнам Босфора",
+    "description": "Роскошная прогулка на яхте по Босфору с панорамами дворцов, мостов и берегов Стамбула",
+    "image": "/assets/img/bosphorus/1.webp",
+    "durationValue": "2",
+    "durationLabel": "⏱️ 2 ч",
+    "price": 280,
+    "priceLabel": "€280+",
+    "category": "bosphorus",
+    "ratingCategory": "bosphorus"
+  }
+]

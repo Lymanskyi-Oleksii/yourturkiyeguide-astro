@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TourCard from '../../components/TourCard.astro';
+import tours from '../../content/personalised.json';
+---
+<BaseLayout title="Индивидуальные экскурсии" description="Индивидуальные экскурсии по Стамбулу под ваши интересы.">
+    <Fragment slot="head">
+        <link rel="stylesheet" href="/assets/css/pages/excursions.css">
+        <link rel="stylesheet" href="/assets/css/layout/excursionsCard.css">
+        <link rel="stylesheet" href="/assets/css/layout/filter.css">
+    </Fragment>
+
+    <section>
+        <div class="container">
+            <article>
+
+                <div class="tours-section">
+                    <h1>Индивидуальные экскурсии по Стамбулу</h1>
+                    <p>Откройте Стамбул так, как вы хотите: наедине с гидом, в компании друзей или семьи.</p>
+                    <p>Разработаем маршрут под ваши интересы!</p>
+                </div>
+
+                <div class="search-filter">
+                    <div class="search-box">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Поиск экскурсий...">
+                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="M21 21l-4.35-4.35"></path>
+                        </svg>
+                    </div>
+
+                    <div class="filter-controls">
+                        <button class="filter-toggle" id="filterToggle">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"></polygon>
+                            </svg>
+                            Фильтры
+                            <svg class="chevron" id="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6,9 12,15 18,9"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="filter-panel" id="filterPanel">
+                        <div class="filter-grid">
+                            <div class="filter-group">
+                                <label class="filter-label">Тематика экскурсии</label>
+                                <select class="filter-select" id="categorySelect">
+                                    <option value="">Все темы</option>
+                                    <option value="историческая">Историческая</option>
+                                    <option value="мистецька">Мистецька</option>
+                                    <option value="шопинг">Шопинг</option>
+                                    <option value="гастро-тур">Гастро-тур</option>
+                                    <option value="фототур">Фототур</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label class="filter-label">Продолжительность</label>
+                                <select class="filter-select" id="durationSelect">
+                                    <option value="">Любая</option>
+                                    <option value="3">До 3 часов</option>
+                                    <option value="4">До 4 часов</option>
+                                    <option value="6">До 6 часов</option>
+                                    <option value="6+">Больше 6 часов</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label class="filter-label">Цена (USD)</label>
+                                <div class="price-inputs">
+                                    <input type="number" class="filter-select price-input" id="priceFromInput" placeholder="От" min="0">
+                                    <span class="price-separator">-</span>
+                                    <input type="number" class="filter-select price-input" id="priceToInput" placeholder="До" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-actions">
+                            <button class="btn-secondary" id="clearFilters">Очистить</button>
+                        </div>
+                    </div>
+
+                    <div class="active-filters" id="activeFilters" style="display: none;">
+                        <span class="active-filters-label">Активные фильтры:</span>
+                        <div id="filterTags"></div>
+                    </div>
+                </div>
+
+                <div class="card-container" id="cardContainer">
+                    {tours.map((tour) => <TourCard basePath="personalised" {...tour} />)}
+                </div>
+
+                <div class="no-results" id="noResults" style="display: none;">
+                    <h3>Экскурсии не найдены</h3>
+                    <p>Попробуйте изменить параметры поиска</p>
+                </div>
+
+                <div class="cta">
+                    <h2>Не нашли нужную экскурсию?</h2>
+                    <p>Напишите мне - подберу маршрут именно для вас!</p>
+                    <a href="https://t.me/+905443266871" target="_blank" class="cta-btn">Связаться в Telegram</a>
+                    <a href="https://wa.me/+905443266871" target="_blank" class="cta-btn1">Связаться в WhatsApp</a>
+                </div>
+
+            </article>
+        </div>
+    </section>
+
+    <script is:inline src="/assets/js/pages/search.js"></script>
+    <script is:inline type="module" src="/assets/js/pages/cards-rating.js"></script>
+</BaseLayout>

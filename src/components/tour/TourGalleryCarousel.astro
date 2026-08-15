@@ -1,0 +1,53 @@
+---
+interface CarouselItem {
+    image: string;
+    alt: string;
+    title: string;
+    description: string;
+}
+interface Props {
+    items: CarouselItem[];
+}
+const { items } = Astro.props;
+---
+<div class="korobka">
+    <div class="floating-elements">
+        <div class="floating-circle" style="width: 100px; height: 100px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+        <div class="floating-circle" style="width: 60px; height: 60px; top: 70%; right: 10%; animation-delay: 2s;"></div>
+        <div class="floating-circle" style="width: 80px; height: 80px; top: 30%; right: 5%; animation-delay: 4s;"></div>
+    </div>
+
+    <div class="gallery-container">
+        <button class="auto-play-toggle" onclick="toggleAutoPlay()">
+            <span id="autoPlayIcon"><div class="play-triangle"></div></span>
+            <span id="autoPlayText">Авто</span>
+        </button>
+
+        <h2 class="section-title">Маршрут экскурсии</h2>
+
+        <div class="carousel-wrapper">
+            <div class="carousel" id="carousel">
+                {items.map((item, i) => (
+                        <div class={`carousel-item ${i === 0 ? 'active' : i === 1 ? 'next' : i === items.length - 1 ? 'prev' : 'hidden'}`}>
+                            <div class="step-number">{i + 1}</div>
+                            <img src={item.image} alt={item.alt} class="item-image">
+                            <div class="item-content">
+                                <h3 class="item-title">{item.title}</h3>
+                                <p class="item-description">{item.description}</p>
+                            </div>
+                        </div>
+                ))}
+            </div>
+        </div>
+
+        <div class="carousel-controls">
+            <button class="control-btn" onclick="carouselPrevSlide()">‹</button>
+            <div class="indicators">
+                {items.map((_, i) => (
+                        <div class={`indicator ${i === 0 ? 'active' : ''}`} onclick={`carouselGoToSlide(${i})`} tabindex="0"></div>
+                ))}
+            </div>
+            <button class="control-btn" onclick="carouselNextSlide()">›</button>
+        </div>
+    </div>
+</div>

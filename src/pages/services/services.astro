@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategoryCard from '../../components/CategoryCard.astro';
+
+const categories = [
+    {
+        href: '/services/yachts',
+        image: '/assets/img/ferat/obzor.webp',
+        title: 'Яхты',
+    },
+    {
+        href: '/services/transfer',
+        image: '/assets/img/transit/1.webp',
+        title: 'Трансфер',
+    },
+    {
+        href: '/services/medical',
+        image: '/assets/img/hello/4.webp',
+        title: 'Медицинский туризм',
+    },
+    {
+        href: '/services/shopping',
+        image: '/assets/img/hello/2.webp',
+        title: 'Шопинг'
+    }
+];
+---
+<BaseLayout title="Другие услуги" description="Дополнительные услуги: яхты, трансфер, медицинский туризм, шопинг.">
+    <Fragment slot="head">
+        <link rel="stylesheet" href="/assets/css/pages/excursions.css">
+    </Fragment>
+
+    <section>
+        <div class="container">
+            <article class="container-article">
+                <div class="card-container">
+                    {categories.map((cat) => <CategoryCard {...cat} />)}
+                </div>
+            </article>
+        </div>
+    </section>
+</BaseLayout>

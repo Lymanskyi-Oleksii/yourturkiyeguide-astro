@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TourHero from '../../../components/tour/TourHero.astro';
+import BookingWidget from '../../../components/tour/BookingWidget.astro';
+import PhotoGallerySecondary from '../../../components/tour/PhotoGallerySecondary.astro';
+import TourAccordion from '../../../components/tour/TourAccordion.astro';
+import TourCTA from '../../../components/tour/TourCTA.astro';
+import TourReviews from '../../../components/tour/TourReviews.astro';
+import FloatingBookingBtn from '../../../components/tour/FloatingBookingBtn.astro';
+import PhotoFullscreenOverlay from '../../../components/tour/PhotoFullscreenOverlay.astro';
+
+const secondGalleryPhotos = Array.from({ length: 6 }, (_, i) => ({
+    image: `/assets/img/transit/${i + 1}.webp`,
+    title: `Фото ${i + 1}`,
+}));
+
+const whatsappMessage = 'Здравствуйте!%20Хочу%20забронировать%20персональную%20экскурсию%20%22Транзитный%20Стамбул%22.%0A%0A📅%20Дата:%20[введите%20дату]%0A👥%20Количество%20человек:%20[до%206]%0A👶%20Будут%20ли%20дети:%20[да/нет]%0A💬%20Комментарий:%20[ваш%20вопрос]%0A%0AСпасибо!';
+---
+<BaseLayout title="Транзитный Стамбул" description="Не скучать в аэропорту во время долгой пересадки и увидеть самое главное в городе.">
+    <Fragment slot="head">
+        <link rel="stylesheet" href="/assets/css/pages/booking.css">
+        <link rel="stylesheet" href="/assets/css/layout/tourMapSelected.css">
+        <link rel="stylesheet" href="/assets/css/layout/route.css">
+        <link rel="stylesheet" href="/assets/css/layout/galleria.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="stylesheet" href="/assets/css/layout/accordion.css">
+        <link rel="stylesheet" href="/assets/css/pages/reviews.css">
+        <link rel="stylesheet" href="/assets/css/layout/fix.css">
+        <link rel="stylesheet" href="/assets/css/layout/reservation.css">
+    </Fragment>
+
+    <section>
+        <div class="container">
+            <article>
+
+                <TourHero
+                        image="/assets/img/transit/6.webp"
+                        title="Транзитный Стамбул"
+                        subtitle="Не скучать в аэропорту во время долгой пересадки и увидеть самое главное в городе"
+                />
+
+                <div class="excursion-text">
+                    <p>Если время между рейсами больше 5 часов, почему бы не провести его с пользой? Чтобы не томиться в зале ожидания, прекрасной альтернативой будет увидеть древнейший город мира и его основные достопримечательности. Вас встретят в аэропорту и довезут до Старого города, где я покажу вам Стамбул — вы посетите Голубую мечеть, Айя-Софию, главную площадь города Султанахмет и Цистерну Базилику.</p>
+
+                    <h2 class="section-title">Что вас ожидает</h2>
+
+                    <div class="subsection-title">Голубая мечеть, или мечеть Султанахмет</div>
+                    <p class="subsection-text">Один из символов города, образец исламской и мировой культуры, построенный в 1609–1616 годах. Красота архитектуры этого здания никого не оставит равнодушным.</p>
+
+                    <div class="subsection-title">Мечеть Святой Софии, или Айя-София</div>
+                    <p class="subsection-text">Всемирно известный памятник византийского зодчества, символ золотого века, который также называют восьмым чудом света. Мечеть построили в 532–537 годах.</p>
+
+                    <div class="subsection-title">Константинопольский ипподром</div>
+                    <p class="subsection-text">Главная площадь Стамбула, расположенная в историческом центре города. Её строительство было начато римским императором Септимием Севером в 203 году, когда город ещё назывался Византием.</p>
+
+                    <div class="subsection-title">Цистерна Базилика</div>
+                    <p class="subsection-text">Одно из самых крупных и хорошо сохранившихся древних подземных водохранилищ Константинополя. Строительство цистерны было начато греками во время правления императора Константина I (306–337 годы) и закончено в 532 году при императоре Юстиниане. Здесь же проходили съёмки фильмов «Инферно», «Джеймс Бонд» и других.</p>
+
+                    <div class="info-sections">
+                        <div class="info-block">
+                            <h3 class="info-title">Организационные детали</h3>
+                            <ul>
+                                <li>Сотрудник трансфера встретит вас в аэропорту и довезёт до Старого города. Далее экскурсия проходит пешком.</li>
+                                <li>Продолжительность пешей экскурсии 3 часа. Трансфер в одну сторону занимает 1 час.</li>
+                                <li>Поездка проходит на комфортабельном автомобиле.</li>
+                                <li>По желанию маршрут можно скорректировать.</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-block">
+                            <h3 class="info-title">Дополнительные расходы</h3>
+                            <ul>
+                                <li>Цистерна Базилика — 1300 лир с человека</li>
+                                <li>Айя-София — 25 евро с человека</li>
+                            </ul>
+                        </div>
+                        <div class="info-block">
+                            <h3 class="info-title">Важная информация о локациях</h3>
+                            <ul>
+                                <li>Голубая мечеть закрывается в 17:45, Айя-София — в 19:00, Цистерна базилика — в 18:30</li>
+                                <li>Для посещения Айя-Софии женщинам необходимо иметь с собой платок</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="meeting-point">
+                        <h3 class="info-title">Место встречи</h3>
+                        <p>Начало экскурсии у вашего аэропорта.<br>
+                            Точное место встречи вы узнаете после внесения предоплаты.</p>
+                    </div>
+                </div>
+
+                <div class="booking-conditions">
+                    <h1 class="title">Условия бронирования</h1>
+                    <div class="conditions-grid">
+                        <div class="condition-card">
+                            <span class="condition-icon">👥</span>
+                            <h3 class="condition-title">Индивидуальный формат</h3>
+                            <p class="condition-description">Только для вас и вашей компании, <span class="highlight">1-6 человек</span></p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">💰</span>
+                            <h3 class="condition-title">Предоплата 20%</h3>
+                            <p class="condition-description"><span class="highlight">остальное —</span><br>организатору напрямую</p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">🗣️</span>
+                            <h3 class="condition-title">Проходит на русском языке</h3>
+                            <p class="condition-description">Экскурсия проводится на русском языке для лучшего понимания</p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">❓</span>
+                            <h3 class="condition-title">Задать вопросы организатору</h3>
+                            <p class="condition-description">можно <span class="highlight">в заказе до предоплаты</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <BookingWidget
+                        duration="5 часов наслаждения"
+                        format="1-6 человек - Семейный"
+                        method="На автомобиле с интересными остановками"
+                        price="€240"
+                        priceNote="за 1–6 человек, независимо от числа участников"
+                        whatsappMessage={whatsappMessage}
+                />
+
+                <PhotoGallerySecondary photos={secondGalleryPhotos} />
+
+                <TourAccordion />
+                <TourCTA />
+                <TourReviews category="tranzit" categoryDisplayName="Транзит" />
+
+            </article>
+
+            <FloatingBookingBtn />
+            <PhotoFullscreenOverlay />
+        </div>
+    </section>
+
+    <script is:inline src="/assets/js/pages/booking.js"></script>
+    <script is:inline src="/assets/js/pages/galleria.js"></script>
+    <script is:inline src="/assets/js/pages/accordion.js"></script>
+</BaseLayout>

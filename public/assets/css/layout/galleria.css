@@ -1,0 +1,610 @@
+/* Глобальні виправлення для запобігання горизонтальному переповненню */
+html, body {
+  overflow-x: hidden !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+.vertical-display {
+  display: flex;
+  height: 600px;
+  gap: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-photo-display {
+  flex: 1;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 0;
+  min-width: 0 !important;
+}
+
+/* ВИПРАВЛЕНО: Фіксовані розміри для всіх пристроїв */
+.main-photo-display img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 20px;
+  display: block !important;
+  /* Забороняємо зображенню змінювати розміри контейнера */
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.main-photo-display::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.main-photo-display:hover::before {
+  transform: translateX(100%);
+}
+
+.main-photo-display::after {
+  content: '\f002  Нажмите для полноэкранного просмотра';
+  font-family: 'Font Awesome 6 Free', sans-serif;
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 25px;
+  font-size: 1.1em;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+  z-index: 3;
+  max-width: 90%;
+  text-align: center;
+}
+
+.main-photo-display:hover::after {
+  opacity: 1;
+}
+
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2em;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #2d37e3 100%);
+  overflow: hidden;
+}
+
+.photo-thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 160px;
+  min-width: 0 !important;
+  max-width: 120px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.3) transparent;
+  flex-shrink: 0;
+}
+
+.photo-thumbnails::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.photo-thumbnails::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+}
+
+.photo-thumbnails::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 3px;
+}
+
+.photo-thumbnail {
+  height: 120px;
+  min-height: 80px;
+  width: 100%;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transform: translateX(20px);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+.photo-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 13px;
+  display: block;
+}
+
+.photo-thumbnail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.photo-thumbnail:hover::before {
+  left: 100%;
+}
+
+.photo-thumbnail:hover, .photo-thumbnail.active {
+  opacity: 1;
+  transform: translateX(0) scale(1.05);
+  border-color: rgba(255,255,255,0.4);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.photo-thumbnail.active {
+  border-color: rgba(255,255,255,0.6);
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+.photo-thumbnail-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9em;
+  text-align: center;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+  overflow: hidden;
+}
+
+.photo-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+  z-index: 4;
+}
+
+.photo-counter {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 1em;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  z-index: 4;
+}
+
+.second-gallery-info {
+  text-align: center;
+  color: var(--text-dark);
+  margin-top: 30px;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+.photo-error {
+  color: #ff6b6b;
+  font-size: 0.9em;
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+/* Стилі для повноекранного режиму */
+.photo-fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+}
+
+.photo-fullscreen-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.photo-fullscreen-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  text-align: center;
+  transform: scale(0.8);
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 90vw;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.photo-fullscreen-overlay.active .photo-fullscreen-content {
+  transform: scale(1);
+}
+
+.photo-fullscreen-main {
+  border-radius: 30px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #2d37e3 100%);
+  max-width: 100%;
+  max-height: 100%;
+  width: fit-content;
+  height: fit-content;
+}
+
+.photo-fullscreen-main img {
+  max-width: 80vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.photo-close-button {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 2em;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.photo-close-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1) rotate(90deg);
+}
+
+.photo-fullscreen-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 2em;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.photo-fullscreen-nav:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.photo-nav-prev {
+  left: 30px;
+}
+
+.photo-nav-next {
+  right: 30px;
+}
+
+.photo-fullscreen-counter {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-size: 1.2em;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 10;
+}
+
+.vertical-display.swipe-left,
+.vertical-display.swipe-up {
+  transform: translateX(-10px);
+  transition: transform 0.2s ease;
+}
+
+.vertical-display.swipe-right,
+.vertical-display.swipe-down {
+  transform: translateX(10px);
+  transition: transform 0.2s ease;
+}
+
+/* Адаптивні стилі з ФІКСОВАНИМИ розмірами для мобільних */
+@media (max-width: 768px) {
+  .vertical-display {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+  }
+
+  .main-photo-display {
+    /* ВИПРАВЛЕНО: Фіксована висота на мобільних */
+    height: 400px !important;
+    order: 2;
+    width: 100%;
+    /* Забороняємо контейнеру змінювати розміри */
+    min-height: 400px !important;
+    max-height: 400px !important;
+  }
+
+  /* ДОДАНО: Підтвердження фіксованих розмірів зображення на мобільних */
+  .main-photo-display img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    /* Забороняємо будь-які зміни розмірів */
+    min-width: 100% !important;
+    min-height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+
+  .main-photo-display::after {
+    font-size: 0.9em;
+    padding: 10px 20px;
+    max-width: 85%;
+  }
+
+  .photo-thumbnails {
+    flex-direction: row;
+    width: 100%;
+    max-width: 100% !important;
+    height: 140px;
+    order: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 0;
+  }
+
+  .photo-thumbnail {
+    min-width: 100px;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    transform: translateY(20px);
+  }
+
+  .photo-thumbnail:hover, .photo-thumbnail.active {
+    transform: translateY(0) scale(1.05);
+  }
+
+  .photo-fullscreen-content {
+    max-width: 95vw;
+    max-height: 95vh;
+    width: 95vw;
+    height: 95vh;
+  }
+
+  .photo-fullscreen-main {
+    padding: 15px;
+  }
+
+  .photo-close-button, .photo-fullscreen-nav {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5em;
+  }
+
+  .photo-close-button {
+    top: 20px;
+    right: 20px;
+  }
+
+  .photo-nav-prev {
+    left: 20px;
+  }
+
+  .photo-nav-next {
+    right: 20px;
+  }
+
+  .photo-fullscreen-counter {
+    bottom: 20px;
+    padding: 12px 24px;
+    font-size: 1em;
+  }
+
+  .photo-fullscreen-main img {
+    max-width: 85vw;
+    max-height: 75vh;
+  }
+
+  .photo-counter {
+    top: 15px;
+    right: 15px;
+    padding: 8px 16px;
+    font-size: 0.9em;
+  }
+
+  .main-photo-display::after {
+    display: none;
+  }
+
+  .second-gallery-info {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-photo-display {
+    /* ВИПРАВЛЕНО: Фіксована висота для маленьких екранів */
+    height: 300px !important;
+    min-height: 300px !important;
+    max-height: 300px !important;
+  }
+
+  /* ПІДТВЕРДЖЕННЯ: Фіксовані розміри зображення на маленьких екранах */
+  .main-photo-display img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+
+  .main-photo-display::after {
+    font-size: 0.8em;
+    padding: 8px 16px;
+    max-width: 80%;
+  }
+
+  .photo-thumbnails {
+    height: 120px;
+    gap: 10px;
+  }
+
+  .photo-thumbnail {
+    min-width: 80px;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+  }
+
+  .photo-counter {
+    top: 10px;
+    right: 10px;
+    padding: 6px 12px;
+    font-size: 0.8em;
+  }
+
+  .photo-fullscreen-main {
+    padding: 10px;
+  }
+
+  .photo-fullscreen-main img {
+    max-width: 90vw;
+    max-height: 70vh;
+  }
+
+  .photo-close-button, .photo-fullscreen-nav {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3em;
+  }
+
+  .photo-close-button {
+    top: 15px;
+    right: 15px;
+  }
+
+  .photo-nav-prev {
+    left: 15px;
+  }
+
+  .photo-nav-next {
+    right: 15px;
+  }
+
+  .photo-fullscreen-counter {
+    bottom: 15px;
+    padding: 10px 20px;
+    font-size: 0.9em;
+  }
+
+  .second-gallery-info {
+    display: none;
+  }
+}

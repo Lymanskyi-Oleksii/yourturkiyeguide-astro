@@ -1,0 +1,28 @@
+---
+interface Photo { image: string; title: string; }
+interface Props { photos: Photo[]; }
+const { photos } = Astro.props;
+---
+<div class="vertical-display">
+    <div class="main-photo-display" id="mainPhotoDisplay" onclick="openFullscreen()">
+        <div class="photo-placeholder" id="mainPhotoContainer">
+            <span>📷</span>
+            <span>Загрузка изображения...</span>
+        </div>
+        <div class="photo-counter">
+            <span id="currentPhoto">1</span> / <span id="totalPhotos">{photos.length}</span>
+        </div>
+        <div class="photo-progress" id="photoProgress" style={`width: ${100 / photos.length}%;`}></div>
+    </div>
+    <div class="photo-thumbnails" id="photoThumbnails"></div>
+</div>
+
+<div class="second-gallery-info">
+    <p>Нажмите на миниатюру для просмотра или используйте клавиши ↑/↓ для навигации</p>
+    <p>Enter - полноэкранный режим</p>
+    <div class="photo-error" id="photoError" style="display: none;"></div>
+</div>
+
+<script is:inline define:vars={{ photos }}>
+    window.gallerySlides = photos;
+</script>

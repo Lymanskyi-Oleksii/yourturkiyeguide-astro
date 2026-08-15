@@ -1,0 +1,137 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TourHero from '../../../components/tour/TourHero.astro';
+import BookingWidget from '../../../components/tour/BookingWidget.astro';
+import PhotoGallerySecondary from '../../../components/tour/PhotoGallerySecondary.astro';
+import TourAccordion from '../../../components/tour/TourAccordion.astro';
+import TourCTA from '../../../components/tour/TourCTA.astro';
+import TourReviews from '../../../components/tour/TourReviews.astro';
+import FloatingBookingBtn from '../../../components/tour/FloatingBookingBtn.astro';
+import PhotoFullscreenOverlay from '../../../components/tour/PhotoFullscreenOverlay.astro';
+
+const secondGalleryPhotos = Array.from({ length: 13 }, (_, i) => ({
+    image: `/assets/img/sophisticated/${i + 1}.webp`,
+    title: `Фото ${i + 1}`,
+}));
+
+const whatsappMessage = 'Здравствуйте!%20Хочу%20забронировать%20персональную%20экскурсию%20%22Изысканный%20Стамбул%22.%0A%0A📅%20Дата:%20[введите%20дату]%0A👥%20Количество%20человек:%20[до%206]%0A👶%20Будут%20ли%20дети:%20[да/нет]%0A💬%20Комментарий:%20[ваш%20вопрос]%0A%0AСпасибо!';
+---
+<BaseLayout title="Изысканный Стамбул" description="Абсолютное погружение в мир утонченной истории, изящной архитектуры и пленительного восточного колорита.">
+    <Fragment slot="head">
+        <link rel="stylesheet" href="/assets/css/pages/booking.css">
+        <link rel="stylesheet" href="/assets/css/layout/tourMapSelected.css">
+        <link rel="stylesheet" href="/assets/css/layout/route.css">
+        <link rel="stylesheet" href="/assets/css/layout/galleria.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="stylesheet" href="/assets/css/layout/accordion.css">
+        <link rel="stylesheet" href="/assets/css/pages/reviews.css">
+        <link rel="stylesheet" href="/assets/css/layout/fix.css">
+        <link rel="stylesheet" href="/assets/css/layout/reservation.css">
+    </Fragment>
+
+    <section>
+        <div class="container">
+            <article>
+
+                <TourHero
+                        image="/assets/img/sophisticated/1.webp"
+                        title="Изысканный Стамбул"
+                        subtitle="Aбсолютное погружение в мир утонченной истории, изящной архитектуры и пленительного восточного колорита"
+                />
+
+                <div class="excursion-text">
+                    <p>Данная экскурсия это эксзотический сплав изысканной европейской архитектуры, исторических памятных мест и восточного турецкого колорита. Здесь вы получите вдохновение и желание вернуться вновь в мир чарующего и такого разного Стамбула</p>
+
+                    <h2 class="section-title">Что вас ожидает</h2>
+
+                    <div class="subsection-title">Дворец Долмабахче</div>
+                    <p class="subsection-text">Дворец, который называют Турецким Версалем. Это не просто дворец, это символ перемен в Османской империи! Здесь жили и правили последние 6 султанов, а затем дворец стал резиденцией первого президента Турецкой республики. Роскошные интерьеры, хрустальные люстры, большое количество золота и серебра в убранстве, драгоценные камни в отделке, повсюду росписи знаменитых художников, а также большие коллекции одежды и предметы быта - все это мы увидим здесь и узнаем самые трепещущие истории связанные с этим местом.</p>
+
+                    <div class="subsection-title">Район Бейоглу - европейский формат достопримечательностей</div>
+                    <p class="subsection-text">Район Бейоглу, где собрано множество самых популярных изысканных достопримечательностей европейского формата, отличающихся от остального Стамбула!</p>
+
+                    <div class="subsection-title">Площадь Таксим - современный центр Стамбула</div>
+                    <p class="subsection-text">Площадь Таксим является современным центром Стамбула. Узнаем все подробности о ее истории.</p>
+
+                    <div class="subsection-title">Улица Истикляль - знаменитая пешеходная улица</div>
+                    <p class="subsection-text">От площади Таксим берет свое начало самая известная пешеходная улица города — Истикляль. Здесь жизнь кипит 24 часа в сутки и можно встретить людей со всего земного шара. Восхитительная архитектура и постоянно изменяющиеся декорации жизни Стамбула-все увидим на этой улице во время неторопливой пешей прогулки. А также сможем прокатиться здесь в знаменитом красном ретро-трамвае.</p>
+
+                    <div class="subsection-title">Турецкий Арбат и его достопримечательности</div>
+                    <p class="subsection-text">Гуляя по Турецкому Арбату (улице Истикляль) посетим следующие достопримечательности и узнаем увлекательные истории о них: Храм Антония Падуанского, Цветочный пассаж, Церковь святой Марии Драперис. По желанию гостей можем зайти на чашечку ароматного Турецкого кофе в первый 5* отель Османской империи – прекрасный Пера Палас, в котором некогда черпала свое вдохновение во время написания «Убийство в восточном экспрессе» сама Агата Кристи.</p>
+
+                    <div class="subsection-title">Галатская Башня и район Каракей</div>
+                    <p class="subsection-text">Затем погуляем у стен одной из визитных карточек города – Галатской Башни и спустимся по необычной лестнице «Комондо» в красочный район Каракей, который расположен у синих вод Босфора, где и закончиться наша увлекательная изысканная прогулка!</p>
+
+                    <div class="info-sections">
+                        <div class="info-block">
+                            <h3 class="info-title">Организационные детали</h3>
+                            <ul>
+                                <li>Стоимость входного билета в Дворец Долмабахче составляет 1800 турецких лир с человека. По понедельникам Дворец Долмабахче закрыт.</li>
+                                <li>Экскурсия проходит в пешем формате</li>
+                                <li>Дополнительные расходы на фуникулер</li>
+                                <li>Ежегодно 1 мая в Турции отмечается День труда, по причине прохождения в этот день митингов площадь Таксим и улица Истикляль закрыты.</li>
+                                <li>По воскресеньям стамбульский храм Святого Антония Падуанского открыт с 09:00 до 19:30. Во все остальные дни его можно посетить с 08:00 до 19:30.</li>
+                                <li>В летнее время Церковь Марии Драперис открыта с 8:00 до 12:00 и с 15:00 до 19:00. В остальные месяцы церковь можно посетить в периоды времени с 10:00 до 12:00 и с 13:00 до 18:00.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="meeting-point">
+                        <h3 class="info-title">Место встречи</h3>
+                        <p>По договоренности с организатором.<br>
+                            Вы можете обсудить его с организатором до оплаты.</p>
+                    </div>
+                </div>
+
+                <div class="booking-conditions">
+                    <h1 class="title">Условия бронирования</h1>
+                    <div class="conditions-grid">
+                        <div class="condition-card">
+                            <span class="condition-icon">👥</span>
+                            <h3 class="condition-title">Индивидуальный формат</h3>
+                            <p class="condition-description">Только для вас и вашей компании, <span class="highlight">1-6 человек</span></p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">💰</span>
+                            <h3 class="condition-title">Предоплата 20%</h3>
+                            <p class="condition-description"><span class="highlight">остальное —</span><br>организатору напрямую</p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">🗣️</span>
+                            <h3 class="condition-title">Проходит на русском языке</h3>
+                            <p class="condition-description">Экскурсия проводится на русском языке для лучшего понимания</p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">❓</span>
+                            <h3 class="condition-title">Задать вопросы организатору</h3>
+                            <p class="condition-description">можно <span class="highlight">в заказе до предоплаты</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <BookingWidget
+                        duration="5 часа наслаждения"
+                        format="1-6 человек - Семейный"
+                        method="Пешком с интересными остановками"
+                        price="€120"
+                        priceNote="за 1–6 человек, независимо от числа участников"
+                        whatsappMessage={whatsappMessage}
+                />
+
+                <PhotoGallerySecondary photos={secondGalleryPhotos} />
+
+                <TourAccordion />
+                <TourCTA />
+                <TourReviews category="sophisticated" categoryDisplayName="Изысканный" />
+
+            </article>
+
+            <FloatingBookingBtn />
+            <PhotoFullscreenOverlay />
+        </div>
+    </section>
+
+    <script is:inline src="/assets/js/pages/booking.js"></script>
+    <script is:inline src="/assets/js/pages/galleria.js"></script>
+    <script is:inline src="/assets/js/pages/accordion.js"></script>
+</BaseLayout>

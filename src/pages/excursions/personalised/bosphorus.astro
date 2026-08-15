@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TourHero from '../../../components/tour/TourHero.astro';
+import BookingWidget from '../../../components/tour/BookingWidget.astro';
+import PhotoGallerySecondary from '../../../components/tour/PhotoGallerySecondary.astro';
+import TourAccordion from '../../../components/tour/TourAccordion.astro';
+import TourCTA from '../../../components/tour/TourCTA.astro';
+import TourReviews from '../../../components/tour/TourReviews.astro';
+import FloatingBookingBtn from '../../../components/tour/FloatingBookingBtn.astro';
+import PhotoFullscreenOverlay from '../../../components/tour/PhotoFullscreenOverlay.astro';
+
+const secondGalleryPhotos = Array.from({ length: 13 }, (_, i) => ({
+    image: `/assets/img/bosphorus/${i + 1}.webp`,
+    title: `Фото ${i + 1}`,
+}));
+
+const whatsappMessage = 'Здравствуйте!%20Хочу%20забронировать%20морскую%20прогулку%20по%20Босфору.%0A%0A📅%20Дата:%20[введите%20дату]%0A👥%20Количество%20человек:%20[укажите]%0A⏱%20Продолжительность:%202%20часа%0A🛥️%20Тип%20яхты:%20[стандарт/премиум]%0A💬%20Комментарий:%20[ваш%20вопрос]%0A%0AСпасибо!';
+---
+<BaseLayout title="По волнам Босфора" description="Прогулка на роскошной яхте вдоль Босфора — незабываемые впечатления на всю жизнь.">
+    <Fragment slot="head">
+        <link rel="stylesheet" href="/assets/css/pages/booking.css">
+        <link rel="stylesheet" href="/assets/css/layout/tourMapSelected.css">
+        <link rel="stylesheet" href="/assets/css/layout/route.css">
+        <link rel="stylesheet" href="/assets/css/layout/galleria.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="stylesheet" href="/assets/css/layout/accordion.css">
+        <link rel="stylesheet" href="/assets/css/pages/reviews.css">
+        <link rel="stylesheet" href="/assets/css/layout/fix.css">
+        <link rel="stylesheet" href="/assets/css/layout/reservation.css">
+    </Fragment>
+
+    <section>
+        <div class="container">
+            <article>
+
+                <TourHero
+                        image="/assets/img/bosphorus/2.webp"
+                        title="По волнам Босфора"
+                        subtitle="Прогулка на роскошной яхте вдоль Босфора - незабываемые впечатления, которые останутся с вами на всю жизнь!"
+                />
+
+                <div class="excursion-text">
+                    <p>Влюбиться в Стамбул окончательно и бесповоротно — проще простого! Отправляйтесь со мной на морскую прогулку по Босфору.</p>
+
+                    <h2 class="section-title">Что вас ожидает</h2>
+
+                    <div class="subsection-title">Босфор - душа Стамбула!</div>
+                    <p class="subsection-text">Если вы не видели Стамбул с воды - вы не видели Стамбул! На морской прогулке вы увидите множество достопримечательностей, расположенных у самих берегов синих вод. Исторические сооружения, летние резиденции, мечети, здания культурного значения - все это мы увидим, плавая на яхте, а также узнаем подробности их появления.</p>
+
+                    <div class="subsection-title">Что увидим с воды</div>
+                    <p class="subsection-text">Османские аристократичные особняки «Ялы», дома из съемок турецких сериалов, колоритные районы города, Стамбульские мосты и многое другое - я с радостью покажу вам под легкий морской бриз и крики чаек!</p>
+
+                    <div class="info-sections">
+                        <div class="info-block">
+                            <h3 class="info-title">Организационные детали</h3>
+                            <ul>
+                                <li>Стоимость зависит от типа и размера яхты.</li>
+                                <li>В морскую прогулку включено сопровождение гида.</li>
+                                <li>На яхте предусмотрены бесплатные напитки (чай, кофе, вода), тарелка сезонных фруктов.</li>
+                                <li>В зимние месяцы прогулка также будет актуальна - яхта отапливается и закрывается прозрачным тентом для комфорта гостей.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="meeting-point">
+                        <h3 class="info-title">Место встречи</h3>
+                        <p>По договоренности с организатором.<br>
+                            Вы можете обсудить его в заказе до предоплаты.</p>
+                    </div>
+                </div>
+
+                <div class="booking-conditions">
+                    <h1 class="title">Условия бронирования</h1>
+                    <div class="conditions-grid">
+                        <div class="condition-card">
+                            <span class="condition-icon">🛥️</span>
+                            <h3 class="condition-title">Приватная яхта</h3>
+                            <p class="condition-description">Только для вас и вашей компании, <span class="highlight">количество человек уточняется</span></p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">💰</span>
+                            <h3 class="condition-title">Цена от €280</h3>
+                            <p class="condition-description"><span class="highlight">Стоимость зависит</span><br>от типа и размера яхты</p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">🗣️</span>
+                            <h3 class="condition-title">Проходит на русском языке</h3>
+                            <p class="condition-description">С сопровождением гида для полного погружения в историю</p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">❓</span>
+                            <h3 class="condition-title">Задать вопросы организатору</h3>
+                            <p class="condition-description">можно <span class="highlight">в заказе до предоплаты</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <BookingWidget
+                        duration="2 часа"
+                        format="Количество людей уточните перед заказом"
+                        method="Морская прогулка на яхте"
+                        price="от €280"
+                        priceNote="стоимость зависит от типа и размера яхты"
+                        whatsappMessage={whatsappMessage}
+                />
+
+                <PhotoGallerySecondary photos={secondGalleryPhotos} />
+
+                <TourAccordion />
+                <TourCTA />
+                <TourReviews category="bosphorus" categoryDisplayName="По волнам Босфора" />
+
+            </article>
+
+            <FloatingBookingBtn />
+            <PhotoFullscreenOverlay />
+        </div>
+    </section>
+
+    <script is:inline src="/assets/js/pages/booking.js"></script>
+    <script is:inline src="/assets/js/pages/galleria.js"></script>
+    <script is:inline src="/assets/js/pages/accordion.js"></script>
+</BaseLayout>

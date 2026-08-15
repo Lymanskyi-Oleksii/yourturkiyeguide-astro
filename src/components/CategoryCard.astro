@@ -1,0 +1,17 @@
+---
+interface Props {
+    href: string;
+    image: string;
+    title: string;
+}
+
+const { href, image, title } = Astro.props;
+---
+<a href={href} class="clickable-link">
+    <div class="card" style={`background-image: url('${image}');`}>
+        <div class="card-content">
+            <h1>{title}</h1>
+            <button class="arrow-button"><span class="arrow">→</span></button>
+        </div>
+    </div>
+</a>
