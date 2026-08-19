@@ -50,14 +50,11 @@ class ReviewsSystem {
   }
 
   async debugReviews() {
-    console.log('🔍 Диагностика отзывов...');
-    console.log('Текущая категория:', this.category);
 
     try {
       const allQuery = query(collection(this.db, 'reviews'));
       const allSnapshot = await getDocs(allQuery);
 
-      console.log('📊 Всего отзывов в БД:', allSnapshot.size);
 
       const allReviews = [];
       allSnapshot.forEach((doc) => {
@@ -74,7 +71,6 @@ class ReviewsSystem {
       console.table(allReviews);
 
       const categoryCount = allReviews.filter(r => r.category === this.category).length;
-      console.log(`📈 Отзывов для категории "${this.category}":`, categoryCount);
 
     } catch (error) {
       console.error('Ошибка диагностики:', error);
@@ -133,12 +129,10 @@ class ReviewsSystem {
     try {
       const result = await signInAnonymously(this.auth);
       this.user = result.user;
-      console.log('Анонимная аутентификация успешна:', this.user.uid);
 
       onAuthStateChanged(this.auth, (user) => {
         if (user && user.isAnonymous) {
           this.user = user;
-          console.log('Анонимный пользователь подтвержден:', user.uid);
         } else if (!user) {
           this.signInAnonymously();
         }
@@ -153,9 +147,7 @@ class ReviewsSystem {
     try {
       const result = await signInAnonymously(this.auth);
       this.user = result.user;
-      console.log('Новая анонимная аутентификация:', this.user.uid);
     } catch (error) {
-      console.error('Ошибка анонимной аутентификации:', error);
       setTimeout(() => this.signInAnonymously(), 3000);
     }
   }
@@ -454,7 +446,6 @@ class ReviewsSystem {
 
   // 🔧 ИСПРАВЛЕННЫЙ метод загрузки отзывов
   async loadReviews() {
-    console.log('🔄 Загрузка отзывов для категории:', this.category);
 
     try {
       // Попробуем простой запрос только по verified
@@ -464,7 +455,6 @@ class ReviewsSystem {
       );
 
       const querySnapshot = await getDocs(q);
-      console.log('📥 Загружено отзывов из БД:', querySnapshot.size);
 
       this.reviews = [];
       querySnapshot.forEach((doc) => {
@@ -496,14 +486,11 @@ class ReviewsSystem {
         return timeB - timeA;
       });
 
-      console.log(`✅ Отзывов для категории "${this.category}":`, this.reviews.length);
 
     } catch (error) {
-      console.error('❌ Ошибка при загрузке отзывов:', error);
 
       // Если и это не работает, попробуем загрузить все отзывы
       try {
-        console.log('🔄 Пробую загрузить все отзывы...');
         const allQuery = query(collection(this.db, 'reviews'));
         const allSnapshot = await getDocs(allQuery);
 
@@ -533,7 +520,6 @@ class ReviewsSystem {
           return timeB - timeA;
         });
 
-        console.log(`✅ Найдено отзывов (fallback):`, this.reviews.length);
 
       } catch (fallbackError) {
         console.error('❌ Критическая ошибка загрузки:', fallbackError);

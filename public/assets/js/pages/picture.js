@@ -358,10 +358,4 @@ document.addEventListener('DOMContentLoaded', () => {
   updateAutoPlayButton();
   updateCarousel();
   startAutoPlay();
-
-  // Debug інформація
-  console.log('🎠 Carousel initialized');
-  console.log(`📱 Device: ${isMobile ? 'Mobile' : 'Desktop'}`);
-  console.log(`📏 Swipe sensitivity: ${swipeData.minDistance}px`);
-  console.log(`⚡ Min velocity: ${swipeData.minVelocity}`);
 });

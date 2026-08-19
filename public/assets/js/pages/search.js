@@ -10,7 +10,6 @@ class ExcursionFilter {
       search: ''
     };
     this.allCards = document.querySelectorAll('.clickable-link');
-    console.log('ExcursionFilter initialized with', this.allCards.length, 'cards');
   }
 
   initElements() {
@@ -314,7 +313,6 @@ class ExcursionFilter {
       }
     });
 
-    console.log(`Filter result: ${visibleCount} cards visible`);
 
     // Показуємо повідомлення якщо немає результатів
     this.toggleNoResults(visibleCount === 0);
@@ -344,7 +342,6 @@ class ExcursionFilter {
   // Метод для ручного оновлення списку карток (якщо вони динамічно додаються)
   refreshCards() {
     this.allCards = document.querySelectorAll('.clickable-link');
-    console.log('Cards refreshed, found:', this.allCards.length);
   }
 }
 
@@ -368,7 +365,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Створюємо глобальний екземпляр для можливості доступу ззовні
   window.excursionFilter = new ExcursionFilter();
 
-  console.log('ExcursionFilter ready!');
 });
 
 // Додаткові утиліти

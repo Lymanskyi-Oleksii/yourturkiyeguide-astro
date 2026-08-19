@@ -485,7 +485,6 @@ function handleTouchEnd(e) {
   );
 
   if (swipeDirection) {
-    console.log(`Swipe detected: ${swipeDirection}`);
     addSwipeFeedback(swipeDirection);
 
     // Використовуємо debounced версії функцій
@@ -608,7 +607,6 @@ document.addEventListener('touchend', function(e) {
 
 // Ініціалізація після завантаження DOM
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('🖼️ Gallery initialization started');
 
   createThumbnails();
 
@@ -659,12 +657,6 @@ document.addEventListener('DOMContentLoaded', function() {
     verticalGallery.addEventListener('touchmove', handleTouchMove, { passive: false });
     verticalGallery.addEventListener('touchend', handleTouchEnd, { passive: true });
   }
-
-  console.log('✅ Gallery initialized successfully');
-  console.log(`📱 Device type: ${isMobile ? 'Mobile' : 'Desktop'}`);
-  console.log(`📏 Swipe sensitivity: ${swipeData.minDistance}px`);
-  console.log(`🖼️ Total slides: ${gallerySlides.length}`);
-  console.log('💡 Press H for help');
 });
 
 // Додаткова оптимізація: пауза при зміні вкладки
@@ -708,7 +700,6 @@ function cleanup() {
     overlay.removeEventListener('touchend', handleTouchEnd);
   }
 
-  console.log('🧹 Gallery cleanup completed');
 }
 
 // Експорт функцій для зовнішнього використання
@@ -738,6 +729,3 @@ if (isMobile) {
   // Зменшуємо максимальний час свайпу
   swipeData.maxTime = 800;
 }
-
-console.log('🚀 Gallery script loaded successfully');
-console.log('📘 Access gallery functions via window.GalleryAPI');

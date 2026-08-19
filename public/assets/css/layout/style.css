@@ -198,7 +198,7 @@ header {
     margin: 0;
 }
 
-.sub-menu li a {
+.menu nav ul li .sub-menu li a {
     padding: 10px 20px;
     font-size: 14px;
     font-weight: 400;
@@ -208,7 +208,7 @@ header {
     transition: var(--transition-default);
 }
 
-.sub-menu li a:hover {
+.menu nav ul li .sub-menu li a:hover {
     background-color: var(--hover-color);
     color: var(--white);
 }
