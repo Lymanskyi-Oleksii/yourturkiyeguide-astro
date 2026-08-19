@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TourCard from '../../components/TourCard.astro';
 import tours from '../../content/personalised.json';
+import TourCTA from '../../components/tour/TourCTA.astro'
 ---
 <BaseLayout title="Индивидуальные экскурсии" description="Индивидуальные экскурсии по Стамбулу под ваши интересы.">
     <Fragment slot="head">
@@ -96,12 +97,10 @@ import tours from '../../content/personalised.json';
                     <p>Попробуйте изменить параметры поиска</p>
                 </div>
 
-                <div class="cta">
-                    <h2>Не нашли нужную экскурсию?</h2>
-                    <p>Напишите мне - подберу маршрут именно для вас!</p>
-                    <a href="https://t.me/+905443266871" target="_blank" class="cta-btn">Связаться в Telegram</a>
-                    <a href="https://wa.me/+905443266871" target="_blank" class="cta-btn1">Связаться в WhatsApp</a>
-                </div>
+                <TourCTA
+                        title="Не нашли нужную экскурсию?"
+                        subtitle="апишите мне - подберу маршрут именно для вас!"
+                />
 
             </article>
         </div>

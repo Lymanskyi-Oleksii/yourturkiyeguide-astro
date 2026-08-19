@@ -1,42 +1,72 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CategoryCard from '../../components/CategoryCard.astro';
+import ServicesFAQ from '../../components/tour/ServicesFAQ.astro';
+import TourCTA from '../../components/tour/TourCTA.astro';
 
 const categories = [
     {
         href: '/services/yachts',
         image: '/assets/img/ferat/obzor.webp',
         title: 'Яхты',
+        description: 'Прогулки и аренда яхт вдоль побережья',
     },
     {
         href: '/services/transfer',
         image: '/assets/img/transit/1.webp',
         title: 'Трансфер',
+        description: 'Встреча в аэропорту и поездки между городами',
     },
     {
         href: '/services/medical',
         image: '/assets/img/hello/4.webp',
         title: 'Медицинский туризм',
+        description: 'Подбор клиники и сопровождение на всех этапах',
     },
     {
         href: '/services/shopping',
         image: '/assets/img/hello/2.webp',
-        title: 'Шопинг'
+        title: 'Шопинг',
+        description: 'Где покупают сами турки, а не только туристы',
     }
 ];
 ---
 <BaseLayout title="Другие услуги" description="Дополнительные услуги: яхты, трансфер, медицинский туризм, шопинг.">
     <Fragment slot="head">
         <link rel="stylesheet" href="/assets/css/pages/excursions.css">
+        <link rel="stylesheet" href="/assets/css/layout/accordion.css">
     </Fragment>
 
     <section>
         <div class="container">
             <article class="container-article">
+                <h1 class="page-title">Другие услуги</h1>
+
                 <div class="card-container">
                     {categories.map((cat) => <CategoryCard {...cat} />)}
                 </div>
+
+                <ServicesFAQ />
+                <TourCTA
+                        title="Не нашли нужную услугу?"
+                        subtitle="Напишите мне - подберу вариант именно для вас!"
+                />
             </article>
         </div>
     </section>
+    <script is:inline src="/assets/js/pages/accordion.js"></script>
 </BaseLayout>
+
+<style>
+    .page-title {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 24px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.3;
+    }
+</style>

@@ -1,37 +1,64 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CategoryCard from '../../components/CategoryCard.astro';
+import ExcursionsFAQ from '../../components/tour/ExcursionsFAQ.astro';
+import TourCTA from '../../components/tour/TourCTA.astro';
 
 const categories = [
     {
         href: '/excursions/personalised',
         image: '/assets/img/ferat/obzor.webp',
         title: 'Индивидуальные экскурсии',
+        description: 'Маршрут под ваши интересы, только вы и гид',
     },
     {
         href: '/excursions/group',
         image: '/assets/img/transit/1.webp',
         title: 'Групповые экскурсии',
+        description: 'Небольшие группы, дружеская атмосфера',
     },
     {
         href: '/excursions/copyright',
         image: '/assets/img/hello/4.webp',
         title: 'Авторские туры',
+        description: 'Нестандартные маршруты не из путеводителей',
     },
 ];
 ---
 <BaseLayout title="Экскурсии" description="Индивидуальные, групповые и авторские экскурсии по Турции с профессиональным гидом.">
     <Fragment slot="head">
         <link rel="stylesheet" href="/assets/css/pages/excursions.css">
+        <link rel="stylesheet" href="/assets/css/layout/accordion.css">
     </Fragment>
 
     <section>
         <div class="container">
             <article class="container-article">
+                <h1 class="page-title">Экскурсии по Турции</h1>
+
                 <div class="card-container">
                     {categories.map((cat) => <CategoryCard {...cat} />)}
                 </div>
+
+                <ExcursionsFAQ />
+                <TourCTA />
             </article>
         </div>
     </section>
+
+    <script is:inline src="/assets/js/pages/accordion.js"></script>
 </BaseLayout>
+
+<style>
+    .page-title {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 24px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.3;
+    }
+</style>
