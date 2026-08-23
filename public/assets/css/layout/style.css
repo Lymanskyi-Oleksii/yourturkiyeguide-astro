@@ -199,18 +199,25 @@ header {
 }
 
 .menu nav ul li .sub-menu li a {
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--text-dark);
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--white);
     display: block;
-    border-radius: 0;
+    border-radius: var(--border-radius-lg);
     transition: var(--transition-default);
+    text-shadow: 0 2px 4px var(--shadow-dark);
 }
 
 .menu nav ul li .sub-menu li a:hover {
-    background-color: var(--hover-color);
-    color: var(--white);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.menu nav ul li .sub-menu li a.active {
+    color: var(--hover-color);
+    font-weight: 600;
 }
 
 /* Стилі для футера */
