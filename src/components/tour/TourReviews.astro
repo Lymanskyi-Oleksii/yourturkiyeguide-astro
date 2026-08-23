@@ -1,9 +1,15 @@
 ---
+import tours from '../../content/personalised.json';
+
 interface Props {
     category: string;
     categoryDisplayName: string;
-}
+    }
 const { category, categoryDisplayName } = Astro.props;
+
+const categoryTours = Object.fromEntries(
+tours.map((t) => [t.ratingCategory, { title: t.title, href: `/excursions/personalised/${t.slug}` }])
+);
 ---
 <div class="reviews-container">
     <div class="reviews-section">
@@ -62,10 +68,10 @@ const { category, categoryDisplayName } = Astro.props;
     </div>
 </div>
 
-<script is:inline type="module" define:vars={{ category, categoryDisplayName }}>
+<script is:inline type="module" define:vars={{ category, categoryDisplayName, categoryTours }}>
     import('/assets/js/pages/reviews.js').then(() => {
         function init() {
-            new ReviewsSystem({ category, categoryDisplayName });
+            new ReviewsSystem({ category, categoryDisplayName, categoryTours });
         }
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', init);

@@ -1,22 +1,6 @@
-// Import Firebase
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getFirestore, collection, addDoc, getDocs, orderBy, query, where, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyASoIqknT0hMi7QTsKS_nBJbDvC9aWbcW0",
-  authDomain: "reviews-project-travels-turkey.firebaseapp.com",
-  projectId: "reviews-project-travels-turkey",
-  storageBucket: "reviews-project-travels-turkey.firebasestorage.app",
-  messagingSenderId: "695056378421",
-  appId: "1:695056378421:web:863f7533509fdf791bdf7c"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+import { collection, addDoc, getDocs, orderBy, query, where, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { db, auth } from '../firebase-init.js';
 
 class ReviewsSystem {
   constructor(options = {}) {
@@ -45,36 +29,9 @@ class ReviewsSystem {
       'bosphorus': 'По волнам Босфора',
       'cappadocia': 'дикая Каппадокия'
     };
+    this.categoryTours = options.categoryTours || {};
 
     this.init();
-  }
-
-  async debugReviews() {
-
-    try {
-      const allQuery = query(collection(this.db, 'reviews'));
-      const allSnapshot = await getDocs(allQuery);
-
-
-      const allReviews = [];
-      allSnapshot.forEach((doc) => {
-        const data = doc.data();
-        allReviews.push({
-          id: doc.id,
-          category: data.category || 'не указано',
-          verified: data.verified,
-          name: data.name,
-          text: data.text?.substring(0, 50) + '...'
-        });
-      });
-
-      console.table(allReviews);
-
-      const categoryCount = allReviews.filter(r => r.category === this.category).length;
-
-    } catch (error) {
-      console.error('Ошибка диагностики:', error);
-    }
   }
 
   async init() {
@@ -87,8 +44,6 @@ class ReviewsSystem {
     this.updateStats();
     this.checkRateLimit();
 
-    // Диагностика
-    setTimeout(() => this.debugReviews(), 1000);
   }
 
   setupCategoryUI() {
@@ -426,10 +381,9 @@ class ReviewsSystem {
 
   sanitizeInput(input) {
     return input
-      .replace(/[<>]/g, '')
-      .replace(/javascript:/gi, '')
-      .replace(/on\w+=/gi, '')
-      .trim();
+        .replace(/javascript:/gi, '')
+        .replace(/on\w+=/gi, '')
+        .trim();
   }
 
   resetForm() {
@@ -542,7 +496,9 @@ class ReviewsSystem {
       return;
     }
 
-    container.innerHTML = this.reviews.map(review => `
+    container.innerHTML = this.reviews.map(review => {
+      const tour = this.category === 'general' ? this.categoryTours[review.category] : null;
+      return `
       <div class="reviews-card">
         <div class="reviews-header">
           <div class="reviews-reviewer-info">
@@ -554,15 +510,19 @@ class ReviewsSystem {
               <div class="reviews-date">${review.date}</div>
             </div>
           </div>
-          <div class="reviews-rating">
-            ${this.renderStars(review.rating)}
+          <div class="reviews-meta">
+            <div class="reviews-rating">
+              ${this.renderStars(review.rating)}
+            </div>
+            ${tour ? `<a href="${tour.href}" class="reviews-category-badge">${this.escapeHtml(tour.title)}</a>` : ''}
           </div>
         </div>
         <div class="reviews-text">
           ${this.escapeHtml(review.text)}
         </div>
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
 
   renderStars(rating) {

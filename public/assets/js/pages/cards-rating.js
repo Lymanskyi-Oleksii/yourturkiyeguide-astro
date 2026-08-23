@@ -1,21 +1,5 @@
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  where,
-  query
-} from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyASoIqknT0hMi7QTsKS_nBJbDvC9aWbcW0",
-  authDomain: "reviews-project-travels-turkey.firebaseapp.com",
-  projectId: "reviews-project-travels-turkey",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+import { collection, getDocs, where, query } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { db } from '../firebase-init.js';
 
 async function loadCardRatings() {
   const cards = document.querySelectorAll('.card-rating');
