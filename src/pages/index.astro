@@ -1,15 +1,393 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import TourCard from '../components/TourCard.astro';
+import allTours from '../content/personalised.json';
+
+const popularSlugs = ['hello', 'stambul', 'bosphorus'];
+const popularTours = popularSlugs
+	.map((slug) => allTours.find((t) => t.slug === slug))
+	.filter((t): t is (typeof allTours)[number] => t !== undefined);
+
+const categoryTours = Object.fromEntries(
+	allTours.map((t) => [t.ratingCategory, { title: t.title, href: `/excursions/personalised/${t.slug}` }])
+);
+
+const formats = [
+	{
+		href: '/excursions/personalised',
+		image: '/assets/img/ferat/obzor.webp',
+		title: 'Индивидуальные экскурсии',
+		description: 'Маршрут под ваши интересы, только вы и гид',
+	},
+	{
+		href: '/excursions/group',
+		image: '/assets/img/transit/1.webp',
+		title: 'Групповые экскурсии',
+		description: 'Небольшие группы, дружеская атмосфера',
+	},
+	{
+		href: '/excursions/copyright',
+		image: '/assets/img/hello/4.webp',
+		title: 'Авторские туры',
+		description: 'Нестандартные маршруты не из путеводителей',
+	},
+];
 ---
 <BaseLayout title="Гид по Турции" description="Фырат Динлер — профессиональный гид по Турции. Индивидуальные и групповые экскурсии, яхты, трансфер, шопинг и медицинский туризм.">
+	<Fragment slot="head">
+		<link rel="stylesheet" href="/assets/css/pages/excursions.css">
+		<link rel="stylesheet" href="/assets/css/pages/reviews.css">
+	</Fragment>
 	<section>
 		<div class="container">
-			<article>
-				<img src="/assets/img/ferat/home.webp" alt="Фырат Динлер" width="400">
-				<h1 class="gradient-text">Ваши незабываемые путешествия по Турции</h1>
-				<p>Приглашаю вас заглянуть в мир чарующего Востока с его легендами и шедеврами. Вас ожидает полное погружение в
-					историю и культуру Турции под сопровождением профессионального и опытного гида.</p>
+			<article class="hero">
+				<div class="hero-text">
+					<h1 class="gradient-text hero-title">Ваши незабываемые путешествия по Турции</h1>
+					<p class="hero-subtitle">Приглашаю вас заглянуть в мир чарующего Востока с его легендами и шедеврами. Полное погружение в историю и культуру Турции под сопровождением профессионального гида.</p>
+					<div class="hero-buttons">
+						<a href="/excursions/excursions" class="hero-btn hero-btn-primary">Смотреть экскурсии</a>
+						<a href="https://t.me/+905443266871" target="_blank" class="hero-btn hero-btn-secondary">Связаться с гидом</a>
+					</div>
+				</div>
+				<div class="hero-image">
+					<img src="/assets/img/ferat/home.webp" alt="Фырат Динлер" width="400">
+				</div>
 			</article>
 		</div>
 	</section>
+
+	<section>
+		<div class="container">
+			<h2 class="section-title">Выберите формат отдыха</h2>
+			<div class="card-container">
+				{formats.map((f) => <CategoryCard {...f} />)}
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container">
+			<article>
+				<h2 class="section-title">Популярные экскурсии</h2>
+				<div class="card-container">
+					{popularTours.map((tour) => (
+						<TourCard basePath="/excursions/personalised" {...tour} />
+					))}
+				</div>
+				<div class="section-cta">
+					<a href="/excursions/excursions" class="hero-btn hero-btn-secondary">Смотреть все экскурсии</a>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<section>
+		<div class="container">
+			<h2 class="section-title">Почему выбирают меня</h2>
+			<div class="why-us-grid">
+				<div class="why-us-item">
+					<div class="why-us-icon">🗓️</div>
+					<h3>10+ лет опыта</h3>
+					<p>Работаю гидом уже больше 10 лет — знаю город не по путеводителям</p>
+				</div>
+				<div class="why-us-item">
+					<div class="why-us-icon">📜</div>
+					<h3>Лицензированный гид</h3>
+					<p>Официальная лицензия от Министерства культуры и туризма Турции</p>
+				</div>
+				<div class="why-us-item">
+					<div class="why-us-icon">🤝</div>
+					<h3>Индивидуальный подход</h3>
+					<p>Маршрут подстраивается под вас, а не наоборот</p>
+				</div>
+				<div class="why-us-item">
+					<div class="why-us-icon">🧭</div>
+					<h3>Маршруты под интересы</h3>
+					<p>История, шопинг, гастрономия или атмосфера города — выбираете вы</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container">
+			<article class="about-teaser">
+				<img src="/assets/img/ferat/about_me.webp" alt="Фырат Динлер" class="about-teaser-photo">
+				<div class="about-teaser-text">
+					<h2 class="section-title about-teaser-title">Ваш гид по Турции — Фырат Динлер</h2>
+					<p>Коренной житель Турции с лицензией от Министерства культуры и туризма. Более 10 лет помогаю гостям увидеть страну не как турист, а как местный житель.</p>
+					<a href="/about" class="hero-btn hero-btn-secondary">Узнать больше →</a>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<section>
+		<div class="container">
+			<h2 class="section-title">Отзывы наших туристов</h2>
+			<div id="homeReviews" class="reviews-grid"></div>
+			<div class="section-cta">
+				<a href="/reviews" class="hero-btn hero-btn-secondary">Все отзывы →</a>
+			</div>
+		</div>
+	</section>
+
+	<script type="module" define:vars={{ categoryTours }}>
+		import('/assets/js/pages/home-reviews.js').then((mod) => {
+			mod.renderTopReviews('homeReviews', categoryTours, 3);
+		});
+	</script>
+
+	<section>
+		<div class="container">
+			<article class="final-cta">
+				<h2 class="section-title final-cta-title">Готовы открыть Турцию по-новому?</h2>
+				<p class="final-cta-text">Подберём экскурсию под ваши интересы, время и бюджет</p>
+				<div class="hero-buttons final-cta-buttons">
+					<a href="/excursions/excursions" class="hero-btn hero-btn-primary">Выбрать экскурсию</a>
+					<a href="https://t.me/+905443266871" target="_blank" class="hero-btn hero-btn-secondary">Связаться с гидом</a>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<script type="module" src="/assets/js/pages/cards-rating.js"></script>
 </BaseLayout>
+
+<style>
+	.hero {
+		display: flex;
+		align-items: center;
+		gap: 40px;
+		text-align: left;
+	}
+
+	.hero-text {
+		flex: 1;
+		min-width: 280px;
+	}
+
+	.hero-title {
+		font-size: clamp(1.8rem, 5vw, 2.8rem);
+		margin-bottom: 16px;
+		line-height: 1.25;
+	}
+
+	.hero-subtitle {
+		font-size: 1.05rem;
+		color: var(--text-light);
+		line-height: 1.6;
+		margin-bottom: 28px;
+	}
+
+	.hero-buttons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+	}
+
+	.hero-btn {
+		display: inline-block;
+		padding: 14px 28px;
+		border-radius: var(--border-radius-lg);
+		font-weight: 600;
+		text-decoration: none;
+		transition: var(--transition-default);
+	}
+
+	.hero-btn-primary {
+		background: var(--hover-color);
+		color: var(--white);
+		box-shadow: 0 6px 16px rgba(255, 98, 0, 0.3);
+	}
+
+	.hero-btn-primary:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 10px 22px rgba(255, 98, 0, 0.4);
+	}
+
+	.hero-btn-secondary {
+		background: transparent;
+		color: var(--primary);
+		border: 2px solid var(--secondary);
+	}
+
+	.hero-btn-secondary:hover {
+		background: var(--secondary);
+		color: var(--white);
+		transform: translateY(-2px);
+	}
+
+	.hero-image {
+		flex: 0 0 auto;
+	}
+
+	.hero-image img {
+		width: 100%;
+		max-width: 320px;
+		border-radius: var(--border-radius-md);
+		box-shadow: 0 10px 24px var(--shadow-medium);
+	}
+
+	.section-title {
+		font-size: clamp(1.8rem, 6vw, 2.5rem);
+		font-weight: 700;
+		text-align: center;
+		margin: 20px 0 24px;
+		background: linear-gradient(135deg, var(--primary), var(--secondary));
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		line-height: 1.3;
+	}
+
+	.section-cta {
+		text-align: center;
+		margin-top: 30px;
+	}
+
+	.why-us-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 24px;
+	}
+
+	.why-us-item {
+		background: var(--card-bg);
+		border-radius: var(--border-radius-md);
+		padding: 28px 20px;
+		text-align: center;
+		box-shadow: 0 6px 16px var(--shadow-light);
+		transition: var(--transition-default);
+	}
+
+	.why-us-item:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 12px 24px var(--shadow-medium);
+	}
+
+	.why-us-icon {
+		font-size: 2.2rem;
+		margin-bottom: 12px;
+	}
+
+	.why-us-item h3 {
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: var(--primary);
+		margin-bottom: 8px;
+	}
+
+	.why-us-item p {
+		font-size: 0.9rem;
+		color: var(--text-light);
+		line-height: 1.5;
+	}
+
+	.about-teaser {
+		display: flex;
+		align-items: center;
+		gap: 40px;
+		text-align: left;
+	}
+
+	.about-teaser-photo {
+		flex: 0 0 auto;
+		width: 220px;
+		height: 220px;
+		object-fit: cover;
+		border-radius: 50%;
+		box-shadow: 0 10px 24px var(--shadow-medium);
+	}
+
+	.about-teaser-text {
+		flex: 1;
+		min-width: 260px;
+	}
+
+	.about-teaser-title {
+		text-align: left;
+		margin: 0 0 14px;
+	}
+
+	.about-teaser-text p {
+		font-size: 1rem;
+		color: var(--text-light);
+		line-height: 1.6;
+		margin-bottom: 20px;
+	}
+
+	.reviews-grid .reviews-card {
+		flex: 1;
+		min-width: 280px;
+		max-width: 340px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.reviews-grid .reviews-text {
+		flex: 1;
+		display: flex;
+		align-items: center;
+	}
+
+	.final-cta {
+		text-align: center;
+	}
+
+	.final-cta-title {
+		margin-bottom: 14px;
+	}
+
+	.final-cta-text {
+		font-size: 1.1rem;
+		color: var(--text-light);
+		margin-bottom: 26px;
+	}
+
+	.final-cta-buttons {
+		justify-content: center;
+	}
+
+	@media (max-width: 900px) {
+		.why-us-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+
+	@media (max-width: 768px) {
+		.hero {
+			flex-direction: column-reverse;
+			text-align: center;
+		}
+
+		.hero-buttons {
+			justify-content: center;
+		}
+
+		.hero-image img {
+			max-width: 260px;
+		}
+		.about-teaser {
+			flex-direction: column;
+			text-align: center;
+		}
+
+		.about-teaser-title {
+			text-align: center;
+		}
+
+		.about-teaser-photo {
+			width: 180px;
+			height: 180px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.why-us-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
