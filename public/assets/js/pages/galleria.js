@@ -3,6 +3,7 @@ let isFullscreen = false;
 let userHasInteracted = false;
 // Змінні для запобігання подвійних спрацювань
 let preventClick = false;
+let savedScrollY = 0;
 let clickTimeout = null;
 
 // Покращені мобільні змінні
@@ -273,15 +274,13 @@ function openFullscreen() {
   if (!overlay) return;
 
   isFullscreen = true;
-  document.body.style.overflow = 'hidden';
 
-  if (isMobile) {
-    document.documentElement.style.overflow = 'hidden';
-    // Приховуємо адресну строку
-    setTimeout(() => {
-      window.scrollTo(0, 1);
-    }, 100);
-  }
+  savedScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${savedScrollY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.overflow = 'hidden';
 
   updateFullscreenContent();
   overlay.classList.add('active');
@@ -292,11 +291,13 @@ function closeFullscreen() {
   if (!overlay) return;
 
   isFullscreen = false;
-  document.body.style.overflow = '';
 
-  if (isMobile) {
-    document.documentElement.style.overflow = '';
-  }
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.overflow = '';
+  window.scrollTo(0, savedScrollY);
 
   overlay.classList.remove('active');
 }
@@ -354,7 +355,6 @@ function resetGallery() {
   }
 }
 
-// Покращена функція обробки свайпу
 function handleSwipe(startX, startY, endX, endY, startTime, endTime) {
   const deltaX = endX - startX;
   const deltaY = endY - startY;
@@ -368,15 +368,9 @@ function handleSwipe(startX, startY, endX, endY, startTime, endTime) {
   if (deltaTime > swipeData.maxTime) return null;
   if (velocity < swipeData.minVelocity) return null;
 
-  // Визначення напрямку
+  // Реагуємо тільки на горизонтальний свайп — вертикальний лишаємо для звичайного скролу сторінки
   if (Math.abs(deltaX) > Math.abs(deltaY)) {
-    // Горизонтальний свайп
     return deltaX > 0 ? 'right' : 'left';
-  } else {
-    // Вертикальний свайп (тільки якщо не в повноекранному режимі)
-    if (!isFullscreen) {
-      return deltaY > 0 ? 'down' : 'up';
-    }
   }
 
   return null;
@@ -487,19 +481,12 @@ function handleTouchEnd(e) {
   if (swipeDirection) {
     addSwipeFeedback(swipeDirection);
 
-    // Використовуємо debounced версії функцій
     switch (swipeDirection) {
       case 'left':
         debouncedNextSlide();
         break;
       case 'right':
         debouncedPrevSlide();
-        break;
-      case 'up':
-        if (!isFullscreen) debouncedNextSlide();
-        break;
-      case 'down':
-        if (!isFullscreen) debouncedPrevSlide();
         break;
     }
   }
@@ -618,22 +605,6 @@ document.addEventListener('DOMContentLoaded', function() {
       userHasInteracted = true;
     }, { once: true });
   });
-
-  // Додаємо обробники для кнопок
-  const closeButton = document.querySelector('.photo-close-button');
-  if (closeButton) {
-    closeButton.addEventListener('click', closeFullscreen);
-  }
-
-  const prevButton = document.querySelector('.photo-nav-prev');
-  if (prevButton) {
-    prevButton.addEventListener('click', prevSlide);
-  }
-
-  const nextButton = document.querySelector('.photo-nav-next');
-  if (nextButton) {
-    nextButton.addEventListener('click', nextSlide);
-  }
 
   // Обробник кліку по overlay для закриття
   const overlay = document.querySelector('.photo-fullscreen-overlay');

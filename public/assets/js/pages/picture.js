@@ -2,13 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentSlide = 0;
   let isAutoPlay = true;
   let autoPlayInterval;
-  const totalSlides = 5;
 
   const slides = document.querySelectorAll('.carousel-item');
   const indicators = document.querySelectorAll('.indicator');
   const carouselWrapper = document.querySelector('.carousel-wrapper');
   const autoPlayIcon = document.getElementById('autoPlayIcon');
   const autoPlayText = document.getElementById('autoPlayText');
+
+  const totalSlides = slides.length;
+
 
   // Покращені змінні для свайпів
   let swipeData = {
@@ -327,6 +329,19 @@ document.addEventListener('DOMContentLoaded', () => {
       startAutoPlay();
     }
   });
+
+  // Пауза автоплею, коли карусель поза зоною видимості
+  const visibilityObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (isAutoPlay) startAutoPlay();
+      } else {
+        stopAutoPlay();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  visibilityObserver.observe(carouselWrapper);
 
   // Обробка зміни орієнтації на мобільних
   window.addEventListener('orientationchange', () => {

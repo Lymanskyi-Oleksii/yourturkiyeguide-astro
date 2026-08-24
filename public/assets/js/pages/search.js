@@ -234,8 +234,6 @@ class ExcursionFilter {
   performFilter() {
     let visibleCount = 0;
 
-    console.log('Performing filter with state:', this.filterState);
-
     this.allCards.forEach((cardLink) => {
       const card = cardLink.querySelector('.card');
 
@@ -360,8 +358,6 @@ function debounce(func, wait) {
 
 // Ініціалізація після завантаження сторінки
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM loaded, initializing ExcursionFilter...');
-
   // Створюємо глобальний екземпляр для можливості доступу ззовні
   window.excursionFilter = new ExcursionFilter();
 

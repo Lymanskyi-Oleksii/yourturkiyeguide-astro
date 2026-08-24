@@ -4,7 +4,7 @@ interface Props { photos: Photo[]; }
 const { photos } = Astro.props;
 ---
 <div class="vertical-display">
-    <div class="main-photo-display" id="mainPhotoDisplay" onclick="openFullscreen()">
+    <div class="main-photo-display" id="mainPhotoDisplay">
         <div class="photo-placeholder" id="mainPhotoContainer">
             <span>📷</span>
             <span>Загрузка изображения...</span>

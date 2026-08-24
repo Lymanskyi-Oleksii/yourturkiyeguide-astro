@@ -14,7 +14,7 @@
   position: relative;
 }
 
-.section-title {
+.route-section-title {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
   margin-bottom: 3rem;
@@ -24,7 +24,7 @@
   position: relative;
 }
 
-.section-title::after {
+.route-section-title::after {
   content: '';
   position: absolute;
   bottom: -10px;
@@ -128,7 +128,7 @@
   height: 35%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
 }
 
@@ -379,7 +379,7 @@
     padding: 30px 20px;
   }
 
-  .section-title {
+  .route-section-title {
     margin-bottom: 2rem;
   }
 
@@ -410,14 +410,14 @@
     height: auto;
   }
 
-  .section-title {
+  .route-section-title {
     font-size: 1.8rem;
     margin-bottom: 1rem;
     padding: 0 10px;
     line-height: 1.2;
   }
 
-  .section-title::after {
+  .route-section-title::after {
     width: 60px;
     height: 3px;
     bottom: -8px;
@@ -571,7 +571,7 @@
       padding-top: 30px;
     }
 
-    .section-title {
+    .route-section-title {
       font-size: 1.6rem;
       margin-bottom: 0.8rem;
     }
@@ -630,7 +630,7 @@
       padding-top: 20px;
     }
 
-    .section-title {
+    .route-section-title {
       font-size: 1.5rem;
       margin-bottom: 0.5rem;
     }
