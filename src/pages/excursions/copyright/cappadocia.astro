@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TourHero from '../../../components/tour/TourHero.astro';
+import TourGalleryCarousel from '../../../components/tour/TourGalleryCarousel.astro';
+import BookingWidget from '../../../components/tour/BookingWidget.astro';
+import PhotoGallerySecondary from '../../../components/tour/PhotoGallerySecondary.astro';
+import TourAccordion from '../../../components/tour/TourAccordion.astro';
+import TourCTA from '../../../components/tour/TourCTA.astro';
+import TourReviews from '../../../components/tour/TourReviews.astro';
+import FloatingBookingBtn from '../../../components/tour/FloatingBookingBtn.astro';
+import PhotoFullscreenOverlay from '../../../components/tour/PhotoFullscreenOverlay.astro';
+
+const routeItems = [
+    { image: '/assets/img/cappadocia/2.webp', alt: 'Прилёт в Каппадокию', title: 'День 1 — Заезд', description: 'Встреча в аэропорту, трансфер в Гёреме, размещение в отеле.' },
+    { image: '/assets/img/cappadocia/3.webp', alt: 'Полёт на воздушном шаре', title: 'День 2 — Шары и Гёреме', description: 'Рассвет с воздушными шарами, музей под открытым небом, долины Монахов и Воображения.' },
+    { image: '/assets/img/cappadocia/4.webp', alt: 'Долина любви', title: 'День 3 — Деринкую и Учхисар', description: 'Долина любви, подземный город Деринкую, крепость Учхисар, гончарная мастерская в Аваносе.' },
+    { image: '/assets/img/cappadocia/5.webp', alt: 'Отъезд', title: 'День 4 — Отъезд', description: 'Свободное время, трансфер в аэропорт.' },
+];
+
+// TODO: замінити 10 на реальну кількість фото, коли завантажите /assets/img/cappadocia/
+const secondGalleryPhotos = Array.from({ length: 10 }, (_, i) => ({
+    image: `/assets/img/cappadocia/${i + 1}.webp`,
+    title: `Фото ${i + 1}`,
+}));
+
+const whatsappMessage = 'Здравствуйте!%20Хочу%20забронировать%20авторский%20тур%20%22Прекрасная%20и%20дикая%20Каппадокия%22.%0A%0A📅%20Дата:%20[введите%20дату]%0A👥%20Количество%20человек:%20[укажите]%0A🎈%20Полёт%20на%20воздушном%20шаре:%20[да/нет]%0A💬%20Комментарий:%20[ваш%20вопрос]%0A%0AСпасибо!';
+---
+<BaseLayout title="Прекрасная и дикая Каппадокия" description="4 дня среди марсианских пейзажей, пещерных монастырей, подземных городов и тысяч воздушных шаров на рассвете.">
+    <Fragment slot="head">
+        <link rel="stylesheet" href="/assets/css/pages/booking.css">
+        <link rel="stylesheet" href="/assets/css/layout/tourMapSelected.css">
+        <link rel="stylesheet" href="/assets/css/layout/route.css">
+        <link rel="stylesheet" href="/assets/css/layout/galleria.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="stylesheet" href="/assets/css/layout/accordion.css">
+        <link rel="stylesheet" href="/assets/css/pages/reviews.css">
+        <link rel="stylesheet" href="/assets/css/layout/fix.css">
+        <link rel="stylesheet" href="/assets/css/layout/reservation.css">
+    </Fragment>
+
+    <section>
+        <div class="container">
+            <article>
+
+                <TourHero
+                        image="/assets/img/cappadocia/1.webp"
+                        title="Прекрасная и дикая Каппадокия"
+                        subtitle="Марсианские ландшафты, пещерные монастыри и тысячи воздушных шаров, поднятых в небо на рассвете — другой мир, дикий и прекрасный."
+                />
+
+                <div class="excursion-text">
+                    <p>Марсианские ландшафты, пещерные дома, древние подземные города, скальные монастыри и церкви первых христиан, узкие улочки с каменными зданиями, прекрасные лошади, керамика с узорами дивной красоты, вкуснейшее вино и тысячи воздушных шаров, поднятых в небо на рассвете! Параллельная реальность, другой мир — дикий и прекрасный... Именно это приходит на ум, когда попадаешь в Каппадокию! Здесь царит совершенно особенная атмосфера и живут удивительные люди. Всем, кто приезжает сюда, кажется, что они попали в совершенно другой мир. Каппадокия обязательно вас покорит! Это уникальное место с особенной энергетикой, где вы сможете отдохнуть и перезагрузиться.</p>
+
+                    <h2 class="section-title">Программа тура</h2>
+
+                    <TourGalleryCarousel items={routeItems} />
+
+                    <div class="subsection-title">День 1</div>
+                    <p class="subsection-text">Встреча в аэропорту Кайсери/Невшехир. Трансфер в Гёреме. Размещение в отеле. Свободное время.</p>
+
+                    <div class="subsection-title">День 2</div>
+                    <p class="subsection-text">Долго спать не придётся! Ведь мы отправимся встречать рассвет на воздушном шаре! Только представьте: фантастические пейзажи Каппадокийских долин и сотни воздушных шаров в небе, купаются в рассветных лучах солнца! (Полёт на шаре осуществляется по желанию и зависит от погодных условий. В случае отмены переносится на следующий день.) Возвращаемся в отель, завтрак, отдых в отеле.<br><br>
+                        Посещение Музея под открытым небом Гёреме. В этом месте Каппадокия хранит одну из самых поразительных глав мировой истории. В его скальных церквях и монастырях тысячи лет назад жили и прятались монахи-христиане! Познакомимся с историей Каппадокии, узнаем о жизни первых христиан в этой местности и увидим уцелевшие великолепные фресковые росписи византийской эпохи.<br><br>
+                        Заглянем в волшебный мир ковров ручной работы и сделаем шикарные фотографии в традиционных Каппадокийских костюмах. Обед в пещерном ресторане с традиционной местной кухней.<br><br>
+                        А дальше нас ждёт экскурсия по Каппадокийским Долинам: прогуляемся среди сказочных дымоходов по Долине монахов и найдём самые причудливые фигуры в Долине воображения. В завершении дня насладимся прекрасным закатом с бокалом Каппадокийского вина, любуясь невероятными видами розовой Долины... Этот момент останется в вашей памяти навсегда.<br><br>
+                        Ужин в одном из лучших ресторанов Гёреме с традиционной кухней и восточной атмосферой. Отведаем самое популярное каппадокийское блюдо — тести-кебаб. Возвращение в отель.</p>
+
+                    <div class="subsection-title">День 3</div>
+                    <p class="subsection-text">Просыпаемся пораньше и отправляемся в долину Любви, чтобы сделать самые шикарные фото на фоне летящих шаров! Увидим, как одновременно в небо поднимаются сотни воздушных шаров, и сделаем потрясающие снимки на смотровой площадке в Долине любви (по желанию можно дополнительно заказать индивидуальную профессиональную съёмку, организовать платье в аренду). Завтрак в отеле.<br><br>
+                        Далее мы отправимся исследовать один из самых крупных подземных городов в мире — Деринкую, построенный ещё в I–II веке до нашей эры и расположенный на 8 этажей под землёй с вентиляционными шахтами, школами, конюшнями, винными погребами, колодцами и часовнями! Узнаем, как был организован быт и жизнь людей под землёй.<br><br>
+                        Затем нас ожидает самый живописный городок Каппадокии — Учхисар. Обедаем в атмосферном ресторане. Отправляемся на прогулку по крепости Учхисар. Сделаем паузу на турецкий чай в маленьком кафе, расположенном в пещере.<br><br>
+                        А дальше мы направимся в небольшой городок Аванос — центр гончарного искусства всего каппадокийского региона. Узнаем секрет многовековой традиции о том, что необходимо сделать местным мужчине и женщине, чтобы создать семью. Заглянем в мастерскую, а также попробуем вылепить горшочек из глины собственными руками!<br><br>
+                        Закат встретим на самой красивой смотровой площадке всей Каппадокии, откуда открывается потрясающий вид на крепость Ортахисар! Переезд в Гёреме. Ужин в одном из лучших ресторанов Каппадокии с традиционной кухней. Возвращение в отель.</p>
+
+                    <div class="subsection-title">День 4</div>
+                    <p class="subsection-text">По желанию ещё раз проснёмся пораньше и поднимемся на террасу отеля, чтобы сделать незабываемые фото на фоне шаров! Завтрак в отеле. Свободное время до вашего рейса. Трансфер в аэропорт Кайсери/Невшехир.</p>
+
+                    <div class="info-sections">
+                        <div class="info-block">
+                            <h3 class="info-title">В стоимость включено</h3>
+                            <ul>
+                                <li>Авиаперелёт в Кайсери/Невшехир и обратно</li>
+                                <li>Проживание 3 ночи в отеле в Гёреме</li>
+                                <li>Трансфер в/из аэропорта Кайсери/Невшехир</li>
+                                <li>Передвижение между локациями на трансфере</li>
+                                <li>Экскурсионное сопровождение гида</li>
+                                <li>Входные билеты по программе</li>
+                                <li>Дегустация каппадокийских вин на закате</li>
+                            </ul>
+                        </div>
+                        <div class="info-block">
+                            <h3 class="info-title">В стоимость не включено</h3>
+                            <ul>
+                                <li>Полёт на воздушном шаре (от €150 в зависимости от сезона, при благоприятной погоде)</li>
+                                <li>Личные расходы в свободное время</li>
+                                <li>Дополнительная фотосессия по желанию (фотограф, аренда платья, ретро-автомобиля и т.д.)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="meeting-point">
+                        <h3 class="info-title">Место встречи</h3>
+                        <p>Встреча в аэропорту Кайсери/Невшехир.<br>
+                            Детали можно обсудить в заказе до предоплаты.</p>
+                    </div>
+                </div>
+
+                <div class="booking-conditions">
+                    <h1 class="title">Условия бронирования</h1>
+                    <div class="conditions-grid">
+                        <div class="condition-card">
+                            <span class="condition-icon">📅</span>
+                            <h3 class="condition-title">4 дня / 3 ночи</h3>
+                            <p class="condition-description">Полностью организованный авторский тур</p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">💰</span>
+                            <h3 class="condition-title">Цена от €500</h3>
+                            <p class="condition-description"><span class="highlight">Цена может меняться</span><br>в зависимости от цен на авиабилеты</p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">🗣️</span>
+                            <h3 class="condition-title">Проходит на русском языке</h3>
+                            <p class="condition-description">С сопровождением гида на протяжении всего тура</p>
+                        </div>
+                        <div class="condition-card">
+                            <span class="condition-icon">❓</span>
+                            <h3 class="condition-title">Задать вопросы организатору</h3>
+                            <p class="condition-description">можно <span class="highlight">в заказе до предоплаты</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <BookingWidget
+                        duration="4 дня / 3 ночи"
+                        format="Индивидуальный авторский тур"
+                        method="Экскурсионный тур с гидом по Каппадокии"
+                        price="от €500"
+                        priceNote="цена может меняться в зависимости от цен на авиабилеты"
+                        whatsappMessage={whatsappMessage}
+                />
+
+                <PhotoGallerySecondary photos={secondGalleryPhotos} />
+
+                <TourAccordion />
+                <TourCTA />
+                <TourReviews category="cappadocia" categoryDisplayName="Прекрасная и дикая Каппадокия" />
+
+            </article>
+
+            <FloatingBookingBtn />
+            <PhotoFullscreenOverlay />
+        </div>
+    </section>
+
+    <script is:inline src="/assets/js/pages/booking.js"></script>
+    <script is:inline src="/assets/js/pages/picture.js"></script>
+    <script is:inline src="/assets/js/pages/galleria.js"></script>
+    <script is:inline src="/assets/js/pages/accordion.js"></script>
+</BaseLayout>
