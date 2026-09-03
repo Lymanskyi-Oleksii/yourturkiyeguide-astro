@@ -284,6 +284,9 @@ function openFullscreen() {
 
   updateFullscreenContent();
   overlay.classList.add('active');
+
+  const floatingBtn = document.querySelector('.floating-booking-btn');
+  if (floatingBtn) floatingBtn.style.display = 'none';
 }
 
 function closeFullscreen() {
@@ -300,6 +303,9 @@ function closeFullscreen() {
   window.scrollTo(0, savedScrollY);
 
   overlay.classList.remove('active');
+
+  const floatingBtn = document.querySelector('.floating-booking-btn');
+  if (floatingBtn) floatingBtn.style.display = '';
 }
 
 function updateFullscreenContent() {
