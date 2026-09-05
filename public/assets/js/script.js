@@ -14,7 +14,9 @@ function highlightActiveLinks() {
   function markExact(links) {
     links.forEach((link) => {
       const linkPath = normalize(link.pathname);
-      if (linkPath === currentPath) {
+      // Активний, якщо шлях співпадає точно АБО поточна сторінка є дочірньою (наприклад
+      // /excursions/personalised/stambul повинна активувати пункт /excursions/personalised)
+      if (linkPath === currentPath || currentPath.startsWith(linkPath + '/')) {
         link.classList.add('active');
         const parentLi = link.closest('li');
         if (parentLi) parentLi.classList.add('active-parent');
