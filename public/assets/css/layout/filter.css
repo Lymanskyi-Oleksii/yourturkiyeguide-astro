@@ -256,26 +256,26 @@
   transform: rotate(180deg);
 }
 
-/* Покращення для контейнера карток */
-.card-container {
+/* СТАЛО: */
+#cardContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   margin-bottom: 20px;
 }
 
-.clickable-link {
+#cardContainer .clickable-link {
   text-decoration: none;
   color: inherit;
   transition: transform 0.3s ease;
 }
 
-.clickable-link:hover {
+#cardContainer .clickable-link:hover {
   transform: translateY(-5px);
 }
 
 /* Приховання карток - правильне видалення з layout */
-.clickable-link.hidden {
+#cardContainer .clickable-link.hidden {
   display: none !important;
 }
 
@@ -325,7 +325,7 @@
     transform: rotate(90deg);
   }
 
-  .card-container {
+  #cardContainer {
     grid-template-columns: 1fr;
   }
 }

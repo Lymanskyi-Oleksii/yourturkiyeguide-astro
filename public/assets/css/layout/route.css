@@ -12,6 +12,7 @@
   min-height: 100vh;
   padding: 50px 20px;
   position: relative;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .route-section-title {
@@ -325,10 +326,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.gallery-container {
-  animation: fadeIn 1s ease-in-out;
 }
 
 /* Фокус для доступності */
