@@ -164,6 +164,14 @@ function createThumbnails() {
 
     thumbnail.appendChild(placeholder);
     thumbnail.appendChild(img);
+
+    if (slide.video) {
+      const playIcon = document.createElement('div');
+      playIcon.className = 'photo-thumbnail-play';
+      playIcon.innerHTML = '▶';
+      thumbnail.appendChild(playIcon);
+    }
+
     container.appendChild(thumbnail);
   });
 }
@@ -193,6 +201,13 @@ function changeSlide(index, element) {
       () => {
         mainDisplay.innerHTML = '';
         mainDisplay.appendChild(img);
+
+        if (slide.video) {
+          const playOverlay = document.createElement('div');
+          playOverlay.className = 'photo-play-overlay';
+          playOverlay.innerHTML = '▶';
+          mainDisplay.appendChild(playOverlay);
+        }
 
         // Додаємо обробник з захистом від подвійних кліків
         const safeOpenFullscreen = preventDoubleAction(() => {
@@ -293,6 +308,8 @@ function closeFullscreen() {
   const overlay = document.querySelector('.photo-fullscreen-overlay');
   if (!overlay) return;
 
+  stopFullscreenVideo();
+
   isFullscreen = false;
 
   document.body.style.position = '';
@@ -308,35 +325,87 @@ function closeFullscreen() {
   if (floatingBtn) floatingBtn.style.display = '';
 }
 
+function stopFullscreenVideo() {
+  const fullscreenMain = document.querySelector('.photo-fullscreen-main');
+  const existingVideo = fullscreenMain && fullscreenMain.querySelector('video');
+  if (existingVideo) {
+    existingVideo.pause();
+  }
+}
+
 function updateFullscreenContent() {
   const slide = gallerySlides[currentIndex];
   const fullscreenMain = document.querySelector('.photo-fullscreen-main');
 
   if (!fullscreenMain) return;
 
-  fullscreenMain.innerHTML = `
-    <div class="photo-placeholder">
-      <span>📷</span>
-      <span>Завантаження зображення...</span>
-    </div>
-  `;
+  // Зупиняємо попереднє відео (якщо було) перед заміною вмісту
+  stopFullscreenVideo();
 
-  const img = createImageElement(
-      slide.image,
-      slide.title || `Зображення ${currentIndex + 1}`,
-      () => {
-        fullscreenMain.innerHTML = '';
-        fullscreenMain.appendChild(img);
-      },
-      () => {
-        fullscreenMain.innerHTML = `
-          <div class="photo-placeholder">
-            <span>❌</span>
-            <span>Не вдалося завантажити зображення</span>
-          </div>
-        `;
+  if (slide.video) {
+    fullscreenMain.innerHTML = `
+      <div class="photo-placeholder">
+        <span>🎬</span>
+        <span>Завантаження відео...</span>
+      </div>
+    `;
+
+    const video = document.createElement('video');
+    video.src = slide.video;
+    if (slide.image) video.poster = slide.image;
+    video.controls = true;
+    video.playsInline = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+
+    video.addEventListener('loadeddata', () => {
+      fullscreenMain.innerHTML = '';
+      fullscreenMain.appendChild(video);
+
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Браузер заблокував автозапуск зі звуком - пробуємо без звуку
+          video.muted = true;
+          video.play().catch(() => {});
+        });
       }
-  );
+    });
+
+    video.addEventListener('error', () => {
+      fullscreenMain.innerHTML = `
+        <div class="photo-placeholder">
+          <span>❌</span>
+          <span>Не вдалося завантажити відео</span>
+        </div>
+      `;
+      showError(`Не вдалося завантажити відео: ${slide.title || 'Відео ' + (currentIndex + 1)}`);
+    });
+  } else {
+    fullscreenMain.innerHTML = `
+      <div class="photo-placeholder">
+        <span>📷</span>
+        <span>Завантаження зображення...</span>
+      </div>
+    `;
+
+    const img = createImageElement(
+        slide.image,
+        slide.title || `Зображення ${currentIndex + 1}`,
+        () => {
+          fullscreenMain.innerHTML = '';
+          fullscreenMain.appendChild(img);
+        },
+        () => {
+          fullscreenMain.innerHTML = `
+            <div class="photo-placeholder">
+              <span>❌</span>
+              <span>Не вдалося завантажити зображення</span>
+            </div>
+          `;
+        }
+    );
+  }
 
   const fullscreenCounter = document.querySelector('.photo-fullscreen-counter');
   if (fullscreenCounter) {

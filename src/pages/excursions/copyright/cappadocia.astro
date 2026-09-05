@@ -11,17 +11,26 @@ import FloatingBookingBtn from '../../../components/tour/FloatingBookingBtn.astr
 import PhotoFullscreenOverlay from '../../../components/tour/PhotoFullscreenOverlay.astro';
 
 const routeItems = [
-    { image: '/assets/img/cappadocia/2.webp', alt: 'Прилёт в Каппадокию', title: 'День 1 — Заезд', description: 'Встреча в аэропорту, трансфер в Гёреме, размещение в отеле.' },
+    { image: '/assets/img/cappadocia/889911351.jpg', alt: 'Прилёт в Каппадокию', title: 'День 1 — Заезд', description: 'Встреча в аэропорту, трансфер в Гёреме, размещение в отеле.' },
     { image: '/assets/img/cappadocia/3.webp', alt: 'Полёт на воздушном шаре', title: 'День 2 — Шары и Гёреме', description: 'Рассвет с воздушными шарами, музей под открытым небом, долины Монахов и Воображения.' },
-    { image: '/assets/img/cappadocia/4.webp', alt: 'Долина любви', title: 'День 3 — Деринкую и Учхисар', description: 'Долина любви, подземный город Деринкую, крепость Учхисар, гончарная мастерская в Аваносе.' },
+    { image: '/assets/img/cappadocia/15.webp', alt: 'Долина любви', title: 'День 3 — Деринкую и Учхисар', description: 'Долина любви, подземный город Деринкую, крепость Учхисар, гончарная мастерская в Аваносе.' },
     { image: '/assets/img/cappadocia/5.webp', alt: 'Отъезд', title: 'День 4 — Отъезд', description: 'Свободное время, трансфер в аэропорт.' },
 ];
 
 // TODO: замінити 10 на реальну кількість фото, коли завантажите /assets/img/cappadocia/
-const secondGalleryPhotos = Array.from({ length: 10 }, (_, i) => ({
-    image: `/assets/img/cappadocia/${i + 1}.webp`,
-    title: `Фото ${i + 1}`,
-}));
+const secondGalleryPhotos = [
+    ...Array.from({ length: 34 }, (_, i) => ({
+        image: `/assets/img/cappadocia/${i + 1}.webp`,
+        title: `Фото ${i + 1}`,
+    })),
+
+    // 46-й слайд — відео
+    {
+        image: '/assets/img/cappadocia/video-poster.webp',
+        video: '/assets/img/cappadocia/balloons.mp4',
+        title: 'Політ на кулях',
+    },
+];
 
 const whatsappMessage = 'Здравствуйте!%20Хочу%20забронировать%20авторский%20тур%20%22Прекрасная%20и%20дикая%20Каппадокия%22.%0A%0A📅%20Дата:%20[введите%20дату]%0A👥%20Количество%20человек:%20[укажите]%0A🎈%20Полёт%20на%20воздушном%20шаре:%20[да/нет]%0A💬%20Комментарий:%20[ваш%20вопрос]%0A%0AСпасибо!';
 ---

@@ -321,6 +321,55 @@ html, body {
   display: block;
 }
 
+.photo-fullscreen-main video {
+  max-width: 80vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  display: block;
+  background: #000;
+}
+
+/* Іконка "play" на мініатюрі відео-слайду */
+.photo-thumbnail-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9em;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Іконка "play" поверх головного (не повноекранного) прев'ю */
+.photo-play-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6em;
+  pointer-events: none;
+  z-index: 3;
+  backdrop-filter: blur(4px);
+}
+
 .photo-close-button {
   position: absolute;
   top: 30px;
@@ -383,7 +432,7 @@ html, body {
 
 .photo-fullscreen-counter {
   position: absolute;
-  bottom: 30px;
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.5);
@@ -499,7 +548,7 @@ html, body {
   }
 
   .photo-fullscreen-counter {
-    bottom: 20px;
+    bottom: 45px;
     padding: 12px 24px;
     font-size: 1em;
   }
@@ -599,7 +648,7 @@ html, body {
   }
 
   .photo-fullscreen-counter {
-    bottom: 15px;
+    bottom: 40px;
     padding: 10px 20px;
     font-size: 0.9em;
   }

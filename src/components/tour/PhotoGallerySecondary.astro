@@ -1,5 +1,5 @@
 ---
-interface Photo { image: string; title: string; }
+interface Photo { image: string; title: string; video?: string; }
 interface Props { photos: Photo[]; }
 const { photos } = Astro.props;
 ---

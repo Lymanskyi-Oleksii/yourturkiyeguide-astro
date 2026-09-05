@@ -124,7 +124,7 @@
 }
 
 .item-content {
-  padding: 20px;
+  padding: 10px;
   height: 35%;
   display: flex;
   flex-direction: column;
@@ -132,8 +132,12 @@
   position: relative;
 }
 
+.item-content p {
+  width: 100%;
+}
+
 .item-title {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 8px;
   color: var(--primary);
@@ -475,7 +479,7 @@
   }
 
   .item-title {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-bottom: 6px;
     line-height: 1.3;
   }
