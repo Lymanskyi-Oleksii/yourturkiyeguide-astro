@@ -1,0 +1,227 @@
+---
+import '@splidejs/splide/css';
+
+interface SplideItem {
+    image: string;
+    alt: string;
+    caption?: string;
+}
+
+interface Props {
+    items: SplideItem[];
+    id: string;
+    autoplay?: boolean;
+    layout?: 'showcase' | 'full';
+}
+
+const { items, id, autoplay = true, layout = 'showcase' } = Astro.props;
+---
+<div class={`photo-splide photo-splide--${layout}`}>
+    <div
+            class="splide photo-splide-mount"
+            id={id}
+            data-autoplay={autoplay ? 'true' : 'false'}
+            data-layout={layout}
+            aria-label="Фотогалерея"
+    >
+        <div class="splide__track">
+            <ul class="splide__list">
+                {items.map((item) => (
+                        <li class="splide__slide" style={`--slide-bg: url('${item.image}')`}>
+                            <img src={item.image} alt={item.alt} loading="lazy" />
+                            {item.caption && <span class="splide-caption">{item.caption}</span>}
+                        </li>
+                ))}
+            </ul>
+        </div>
+        {autoplay && (
+                <div class="splide__progress">
+                    <div class="splide__progress__bar"></div>
+                </div>
+        )}
+    </div>
+</div>
+
+<script>
+    import Splide from '@splidejs/splide';
+
+    function initSplides(): void {
+        document
+            .querySelectorAll<HTMLElement>('.photo-splide-mount:not([data-splide-initialized])')
+            .forEach((el) => {
+                el.setAttribute('data-splide-initialized', 'true');
+                const autoplay = el.getAttribute('data-autoplay') === 'true';
+                const layout = el.getAttribute('data-layout');
+
+                const isFull = layout === 'full';
+
+                const splide = new Splide(el, isFull
+                    ? {
+                        type: 'loop',
+                        perPage: 1,
+                        arrows: true,
+                        pagination: true,
+                        autoplay,
+                        interval: 4000,
+                        pauseOnHover: true,
+                        pauseOnFocus: true,
+                    }
+                    : {
+                        type: 'loop',
+                        height: '22rem',
+                        autoWidth: true,
+                        focus: 'center',
+                        gap: '1rem',
+                        arrows: true,
+                        pagination: false,
+                        autoplay,
+                        interval: 3500,
+                        pauseOnHover: true,
+                        pauseOnFocus: true,
+                    });
+
+                if (autoplay) {
+                    splide.on('mounted', () => {
+                        const bar = el.querySelector<HTMLElement>('.splide__progress__bar');
+                        if (!bar) return;
+                        splide.on('autoplay:playing', (rate: number) => {
+                            bar.style.width = `${rate * 100}%`;
+                        });
+                    });
+                }
+
+                splide.mount();
+            });
+    }
+
+    initSplides();
+</script>
+
+<style>
+    :root {
+        --slide-bg: none;
+    }
+
+    .photo-splide {
+        margin: 24px 0 40px;
+    }
+
+    /* ===== Showcase layout (multiple photos, centered focus) ===== */
+    .photo-splide--showcase :global(.splide__slide) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: var(--border-radius-md);
+        box-shadow: 0 4px 15px var(--shadow-light);
+        position: relative;
+        opacity: 0.45;
+        transform: scale(0.92);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .photo-splide--showcase :global(.splide__slide.is-active) {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .photo-splide--showcase :global(.splide__slide img) {
+        height: 100%;
+        width: auto;
+        display: block;
+        border-radius: var(--border-radius-md);
+    }
+
+    /* ===== Full layout (one big photo, dots below) ===== */
+    .photo-splide--full :global(.splide__slide) {
+        position: relative;
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+        box-shadow: 0 4px 15px var(--shadow-light);
+        background: #111;
+    }
+
+    .photo-splide--full :global(.splide__slide::before) {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: var(--slide-bg);
+        background-size: cover;
+        background-position: center;
+        filter: blur(28px) brightness(0.55);
+        transform: scale(1.2);
+        z-index: 0;
+    }
+
+    .photo-splide--full :global(.splide__slide img) {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+
+    .photo-splide--full :global(.splide__track) {
+        border-radius: var(--border-radius-md);
+        aspect-ratio: 4 / 3;
+    }
+
+    @media (min-width: 768px) {
+        .photo-splide--full :global(.splide__track) {
+            aspect-ratio: 16 / 9;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .photo-splide--full :global(.splide__slide img) {
+            object-fit: cover;
+        }
+
+        .photo-splide--full :global(.splide__slide::before) {
+            display: none;
+        }
+    }
+
+    .photo-splide--full :global(.splide__pagination__page) {
+        background: var(--secondary);
+        opacity: 0.4;
+    }
+
+    .photo-splide--full :global(.splide__pagination__page.is-active) {
+        opacity: 1;
+        transform: scale(1.3);
+    }
+
+    /* ===== Shared ===== */
+    :global(.splide__arrow) {
+        background: var(--primary);
+        opacity: 0.85;
+    }
+
+    :global(.splide__arrow svg) {
+        fill: #fff;
+    }
+
+    :global(.splide__arrow:hover) {
+        opacity: 1;
+        background: var(--secondary);
+    }
+
+    .splide-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 14px;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.65));
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    :global(.splide__progress__bar) {
+        background: var(--secondary);
+        height: 3px;
+    }
+</style>

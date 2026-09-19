@@ -1,16 +1,208 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PhotoSplide from '../../components/tour/PhotoSplide.astro';
+import ServicesFAQ from '../../components/tour/ServicesFAQ.astro';
+import TourCTA from '../../components/tour/TourCTA.astro';
+
+const benefits = [
+    {
+        title: 'Фиксированная стоимость',
+        text: 'Никаких скрытых доплат за пробки, платные дороги или мосты.',
+    },
+    {
+        title: 'Водитель ждёт даже при задержке рейса',
+        text: 'Встреча в зоне аэропорта (Новый аэропорт Стамбула или Сабиха Гёкчен) в любое время.',
+    },
+    {
+        title: 'Безупречный сервис',
+        text: 'Просторный чистый салон, кондиционер, вода и помощь с багажом.',
+    },
+];
+
+const prices = [
+    {
+        title: 'Трансфер из Istanbul Airport',
+        price: '50€',
+        note: 'Новый аэропорт Стамбула — в любую точку города',
+    },
+    {
+        title: 'Трансфер из Sabiha Gökçen Airport',
+        price: '60€',
+        note: 'Азиатская сторона Стамбула — в любую точку города',
+    },
+    {
+        title: 'Аренда авто с водителем',
+        price: 'от … €/час',
+        note: 'Бизнес, люкс и ультра-люкс класс — уточняйте у гида',
+    },
+    {
+        title: 'Трансфер в другом городе Турции',
+        price: 'по запросу',
+        note: 'Для уточнения стоимости свяжитесь с гидом',
+    },
+];
+
+const galleryItems = [
+    { image: '/assets/img/transfer/1.webp', alt: 'Премиум трансфер в Стамбуле' },
+    { image: '/assets/img/transfer/2.webp', alt: 'Комфортный минивэн для трансфера' },
+    { image: '/assets/img/transfer/3.webp', alt: 'Аренда авто с водителем в Стамбуле' },
+];
 ---
-<BaseLayout title="Трансфер" description="Трансфер в Турции.">
+<BaseLayout title="Трансфер" description="Персональный премиум трансфер и аренда авто с водителем в Стамбуле.">
+    <Fragment slot="head">
+        <link rel="stylesheet" href="/assets/css/layout/accordion.css">
+    </Fragment>
+
     <section>
         <div class="container">
             <article>
-                <div class="tours-section">
-                    <h1>Трансфер</h1>
-                    <p>Раздел в разработке.</p>
+                <div class="tours-section transfer-intro">
+                    <h1>Персональный премиум трансфер в Стамбуле</h1>
+                    <p class="lead">Путешествуйте по Стамбулу красиво, безопасно и с удовольствием с первых минут вашего пребывания!</p>
+                    <p>Добро пожаловать в Стамбул! Чтобы ваше знакомство с этим великолепным городом началось с максимального комфорта, я рад предложить вам услугу персонального премиум трансфера.</p>
+                    <p>Забудьте о хлопотах с общественным транспортом и очередях за такси. Наш профессиональный англо- и русскоязычный водитель встретит вас на комфортабельном минивэне и безопасно доставит в любую точку города.</p>
                 </div>
+
+                <PhotoSplide items={galleryItems} id="transfer-gallery" autoplay={true} layout="full" />
+
+                <div class="benefits-block">
+                    <h2>Почему выбирают мой трансфер</h2>
+                    <div class="benefits-grid">
+                        {benefits.map((b) => (
+                                <div class="benefit-card">
+                                    <h3>{b.title}</h3>
+                                    <p>{b.text}</p>
+                                </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div class="tours-section rental-block">
+                    <h2>Аренда авто с водителем</h2>
+                    <p>А для более комфортного и свободного передвижения по мегаполису предоставляю на выбор аренду авто класса бизнес, люкс и ультра-люкс с услугой водителя. Это возможность спланировать комфортную поездку вне зависимости от времени суток и погодных условий — автомобиль будет соответствовать любым вашим запросам.</p>
+                </div>
+
+                <div class="pricing-block">
+                    <h2>Стоимость</h2>
+                    <div class="pricing-grid">
+                        {prices.map((p) => (
+                                <div class="price-card">
+                                    <h3>{p.title}</h3>
+                                    <div class="price-value">{p.price}</div>
+                                    <p>{p.note}</p>
+                                </div>
+                        ))}
+                    </div>
+                </div>
+
+                <ServicesFAQ />
+                <TourCTA
+                        title="Готовы забронировать трансфер?"
+                        subtitle="Напишите мне дату, время и рейс — организую комфортную встречу и поездку."
+                />
             </article>
         </div>
     </section>
-</BaseLayout>
 
+    <script is:inline src="/assets/js/pages/accordion.js"></script>
+
+    <style>
+        .transfer-intro h1 {
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .transfer-intro .lead {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .transfer-intro p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .benefits-block,
+        .rental-block,
+        .pricing-block {
+            margin-top: 40px;
+        }
+
+        .benefits-block h2,
+        .rental-block h2,
+        .pricing-block h2 {
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .rental-block p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .benefits-grid,
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .benefit-card,
+        .price-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            box-shadow: 0 4px 15px var(--shadow-light);
+            transition: var(--transition-default);
+        }
+
+        .benefit-card:hover,
+        .price-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px var(--shadow-medium);
+        }
+
+        .benefit-card h3 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .benefit-card p {
+            color: var(--text-light);
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .price-card h3 {
+            color: var(--primary);
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+            min-height: 48px;
+        }
+
+        .price-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .price-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+    </style>
+</BaseLayout>
