@@ -9,13 +9,15 @@ class ReviewsSystem {
     this.db = db;
     this.auth = auth;
     this.user = null;
-    this.lastSubmissionTime = this.getLastSubmissionTime();
     this.captchaVerified = false;
     this.RATE_LIMIT_MINUTES = 15;
 
     // Настройки категорий
     this.category = options.category || 'general';
     this.categoryDisplayName = options.categoryDisplayName || 'Общие отзывы';
+
+    // Час останнього відгуку читаємо після ініціалізації категорії
+    this.lastSubmissionTime = this.getLastSubmissionTime();
 
     // Настройки UI
     this.showCategorySelector = options.showCategorySelector || false;
@@ -108,13 +110,14 @@ class ReviewsSystem {
   }
 
   getLastSubmissionTime() {
-    const saved = localStorage.getItem(`lastReviewSubmission_${this.category}`);
+    // Спільний ключ для всіх категорій: ліміт діє на весь сайт
+    const saved = localStorage.getItem('lastReviewSubmission');
     return saved ? parseInt(saved) : 0;
   }
 
   setLastSubmissionTime() {
     const now = Date.now();
-    localStorage.setItem(`lastReviewSubmission_${this.category}`, now.toString());
+    localStorage.setItem('lastReviewSubmission', now.toString());
     this.lastSubmissionTime = now;
   }
 
