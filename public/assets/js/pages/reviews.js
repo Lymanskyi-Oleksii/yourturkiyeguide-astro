@@ -153,7 +153,7 @@ class ReviewsSystem {
     const inputs = form.querySelectorAll('input, textarea, button, select');
 
     inputs.forEach(input => input.disabled = false);
-    submitBtn.textContent = 'Опубликовать отзыв';
+    submitBtn.textContent = 'Отправить отзыв';
     submitBtn.style.opacity = '1';
     this.createCaptcha();
   }
@@ -344,7 +344,7 @@ class ReviewsSystem {
       date: new Date().toLocaleDateString('ru-RU'),
       timestamp: serverTimestamp(),
       userId: this.user.uid,
-      verified: true,
+      verified: false, // новий відгук чекає на модерацію
       category: selectedCategory
     };
 
@@ -358,12 +358,11 @@ class ReviewsSystem {
 
       this.setLastSubmissionTime();
 
-      await this.loadReviews();
-      this.renderReviews();
-      this.updateStats();
+      // Список не перемальовуємо: відгук з'явиться після модерації
       this.resetForm();
+      this.showModerationNotice();
 
-      btn.textContent = 'Отзыв добавлен! ✓';
+      btn.textContent = 'Отзыв отправлен ✓';
       setTimeout(() => {
         btn.textContent = originalText;
         btn.disabled = false;
@@ -375,9 +374,23 @@ class ReviewsSystem {
       alert('Ошибка при сохранении отзыва. Попробуйте еще раз.');
 
       const btn = document.querySelector('.reviews-submit-btn');
-      btn.textContent = 'Опубликовать отзыв';
+      btn.textContent = 'Отправить отзыв';
       btn.disabled = false;
     }
+  }
+
+  // Повідомлення про те, що відгук піде на модерацію
+  showModerationNotice() {
+    let notice = document.getElementById('reviewModerationNotice');
+    if (!notice) {
+      notice = document.createElement('div');
+      notice.id = 'reviewModerationNotice';
+      notice.className = 'reviews-moderation-notice';
+      notice.setAttribute('role', 'status');
+      const submitBtn = document.querySelector('.reviews-submit-btn');
+      submitBtn.insertAdjacentElement('afterend', notice);
+    }
+    notice.textContent = 'Спасибо! Отзыв появится на сайте после проверки';
   }
 
   sanitizeInput(input) {
@@ -572,6 +585,15 @@ const categoryStyles = `
     outline: none;
     border-color: #007bff;
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+
+  .reviews-moderation-notice {
+    margin-top: 15px;
+    padding: 12px 16px;
+    border: 1px solid #b7e1c1;
+    border-radius: 8px;
+    background-color: #eaf7ee;
+    color: #1e6b34;
   }
 
   .reviews-empty-state {
