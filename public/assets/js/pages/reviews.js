@@ -300,7 +300,6 @@ class ReviewsSystem {
 
   async addReview() {
     const name = document.getElementById('reviewerName').value.trim();
-    const email = document.getElementById('reviewerEmail').value.trim();
     const text = document.getElementById('reviewText').value.trim();
 
     const selectedCategory = document.getElementById('categorySelect')
@@ -340,7 +339,6 @@ class ReviewsSystem {
 
     const review = {
       name: this.sanitizeInput(name),
-      email: email ? this.sanitizeInput(email) : '',
       rating: this.selectedRating,
       text: this.sanitizeInput(text),
       date: new Date().toLocaleDateString('ru-RU'),
