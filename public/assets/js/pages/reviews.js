@@ -341,7 +341,6 @@ class ReviewsSystem {
       name: this.sanitizeInput(name),
       rating: this.selectedRating,
       text: this.sanitizeInput(text),
-      date: new Date().toLocaleDateString('ru-RU'),
       timestamp: serverTimestamp(),
       userId: this.user.uid,
       verified: false, // новий відгук чекає на модерацію
@@ -456,43 +455,8 @@ class ReviewsSystem {
 
 
     } catch (error) {
-
-      // Если и это не работает, попробуем загрузить все отзывы
-      try {
-        const allQuery = query(collection(this.db, 'reviews'));
-        const allSnapshot = await getDocs(allQuery);
-
-        this.reviews = [];
-        allSnapshot.forEach((doc) => {
-          const data = doc.data();
-          const reviewCategory = data.category || 'general';
-
-          if (reviewCategory === this.category && (data.verified === true || data.verified === undefined)) {
-            if (data.timestamp && data.timestamp.toDate) {
-              data.date = data.timestamp.toDate().toLocaleDateString('ru-RU');
-              data.timestampValue = data.timestamp.toDate().getTime();
-            } else {
-              data.timestampValue = Date.now();
-            }
-
-            this.reviews.push({
-              id: doc.id,
-              ...data
-            });
-          }
-        });
-
-        this.reviews.sort((a, b) => {
-          const timeA = a.timestampValue || 0;
-          const timeB = b.timestampValue || 0;
-          return timeB - timeA;
-        });
-
-
-      } catch (fallbackError) {
-        console.error('❌ Критическая ошибка загрузки:', fallbackError);
-        this.reviews = [];
-      }
+      console.error('❌ Критическая ошибка загрузки:', error);
+      this.reviews = [];
     }
   }
 

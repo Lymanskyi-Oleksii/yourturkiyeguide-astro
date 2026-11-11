@@ -28,6 +28,8 @@ export async function renderTopReviews(containerId, categoryTours, count = 3) {
             const data = doc.data();
             reviews.push({
                 ...data,
+                // Дата обчислюється з timestamp (поле date у документі більше не зберігається)
+                date: data.timestamp && data.timestamp.toDate ? data.timestamp.toDate().toLocaleDateString('ru-RU') : '',
                 timestampValue: data.timestamp && data.timestamp.toDate ? data.timestamp.toDate().getTime() : 0,
             });
         });
