@@ -277,15 +277,7 @@ class ReviewsSystem {
   }
 
   validateContent(text) {
-    const bannedWords = ['спам', 'реклама', 'купить', 'продажа', 'дешево'];
-    const lowerText = text.toLowerCase();
-
-    for (const word of bannedWords) {
-      if (lowerText.includes(word)) {
-        return false;
-      }
-    }
-
+    // Стоп-слова прибрано: фільтрацію контенту робить модерація
     const upperCaseCount = (text.match(/[A-ZА-ЯЁЄІЇҐ]/g) || []).length;
     if (upperCaseCount > text.length * 0.7) {
       return false;
@@ -338,9 +330,9 @@ class ReviewsSystem {
     }
 
     const review = {
-      name: this.sanitizeInput(name),
+      name: name,
       rating: this.selectedRating,
-      text: this.sanitizeInput(text),
+      text: text,
       timestamp: serverTimestamp(),
       userId: this.user.uid,
       verified: false, // новий відгук чекає на модерацію
@@ -390,13 +382,6 @@ class ReviewsSystem {
       submitBtn.insertAdjacentElement('afterend', notice);
     }
     notice.textContent = 'Спасибо! Отзыв появится на сайте после проверки';
-  }
-
-  sanitizeInput(input) {
-    return input
-        .replace(/javascript:/gi, '')
-        .replace(/on\w+=/gi, '')
-        .trim();
   }
 
   resetForm() {
