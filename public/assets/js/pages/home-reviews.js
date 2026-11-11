@@ -1,11 +1,6 @@
 import { collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 import { db } from '../firebase-init.js';
-
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
+import { esc, normalizeReview } from './review-utils.js';
 
 function renderStars(rating) {
     let stars = '';
@@ -25,16 +20,11 @@ export async function renderTopReviews(containerId, categoryTours, count = 3) {
 
         const reviews = [];
         snapshot.forEach((doc) => {
-            const data = doc.data();
-            reviews.push({
-                ...data,
-                // Дата обчислюється з timestamp (поле date у документі більше не зберігається)
-                date: data.timestamp && data.timestamp.toDate ? data.timestamp.toDate().toLocaleDateString('ru-RU') : '',
-                timestampValue: data.timestamp && data.timestamp.toDate ? data.timestamp.toDate().getTime() : 0,
-            });
+            // Дата обчислюється з timestamp, усі поля приводяться до безпечного вигляду
+            reviews.push(normalizeReview(doc.data()));
         });
 
-        reviews.sort((a, b) => b.rating - a.rating || b.timestampValue - a.timestampValue);
+        reviews.sort((a, b) => b.rating - a.rating || b.time - a.time);
         const top = reviews.slice(0, count);
 
         if (top.length === 0) {
@@ -48,18 +38,18 @@ export async function renderTopReviews(containerId, categoryTours, count = 3) {
         <div class="reviews-card">
           <div class="reviews-header">
             <div class="reviews-reviewer-info">
-              <div class="reviews-reviewer-avatar">${review.name.charAt(0).toUpperCase()}</div>
+              <div class="reviews-reviewer-avatar">${esc(review.initial)}</div>
               <div class="reviews-reviewer-details">
-                <h4>${escapeHtml(review.name)}</h4>
-                <div class="reviews-date">${review.date || ''}</div>
+                <h4>${esc(review.name)}</h4>
+                <div class="reviews-date">${esc(review.date)}</div>
               </div>
             </div>
             <div class="reviews-meta">
               <div class="reviews-rating">${renderStars(review.rating)}</div>
-              ${tour ? `<a href="${tour.href}" class="reviews-category-badge">${escapeHtml(tour.title)}</a>` : ''}
+              ${tour ? `<a href="${tour.href}" class="reviews-category-badge">${esc(tour.title)}</a>` : ''}
             </div>
           </div>
-          <div class="reviews-text">${escapeHtml(review.text)}</div>
+          <div class="reviews-text">${esc(review.text)}</div>
         </div>
       `;
         }).join('');

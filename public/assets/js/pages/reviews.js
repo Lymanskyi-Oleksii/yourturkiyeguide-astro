@@ -1,6 +1,7 @@
 import { collection, addDoc, getDocs, orderBy, query, where, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 import { signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 import { db, auth } from '../firebase-init.js';
+import { esc, normalizeReview } from './review-utils.js';
 
 class ReviewsSystem {
   constructor(options = {}) {
@@ -410,33 +411,20 @@ class ReviewsSystem {
 
       this.reviews = [];
       querySnapshot.forEach((doc) => {
-        const data = doc.data();
+        // Приводимо всі поля до безпечного вигляду (category за замовчуванням 'general')
+        const review = normalizeReview(doc.data());
 
         // Фильтруем по категории в коде
-        const reviewCategory = data.category || 'general'; // fallback для старых отзывов
-
-        if (this.category === 'general' || reviewCategory === this.category) {
-          if (data.timestamp && data.timestamp.toDate) {
-            data.date = data.timestamp.toDate().toLocaleDateString('ru-RU');
-            data.timestampValue = data.timestamp.toDate().getTime();
-          } else {
-            // Fallback для отзывов без timestamp
-            data.timestampValue = Date.now();
-          }
-
+        if (this.category === 'general' || review.category === this.category) {
           this.reviews.push({
             id: doc.id,
-            ...data
+            ...review
           });
         }
       });
 
       // Сортируем по времени (новые сначала)
-      this.reviews.sort((a, b) => {
-        const timeA = a.timestampValue || 0;
-        const timeB = b.timestampValue || 0;
-        return timeB - timeA;
-      });
+      this.reviews.sort((a, b) => b.time - a.time);
 
 
     } catch (error) {
@@ -466,22 +454,22 @@ class ReviewsSystem {
         <div class="reviews-header">
           <div class="reviews-reviewer-info">
             <div class="reviews-reviewer-avatar">
-              ${review.name.charAt(0).toUpperCase()}
+              ${esc(review.initial)}
             </div>
             <div class="reviews-reviewer-details">
-              <h4>${this.escapeHtml(review.name)}</h4>
-              <div class="reviews-date">${review.date}</div>
+              <h4>${esc(review.name)}</h4>
+              <div class="reviews-date">${esc(review.date)}</div>
             </div>
           </div>
           <div class="reviews-meta">
             <div class="reviews-rating">
               ${this.renderStars(review.rating)}
             </div>
-            ${tour ? `<a href="${tour.href}" class="reviews-category-badge">${this.escapeHtml(tour.title)}</a>` : ''}
+            ${tour ? `<a href="${tour.href}" class="reviews-category-badge">${esc(tour.title)}</a>` : ''}
           </div>
         </div>
         <div class="reviews-text">
-          ${this.escapeHtml(review.text)}
+          ${esc(review.text)}
         </div>
       </div>
     `;
@@ -506,12 +494,6 @@ class ReviewsSystem {
     document.getElementById('totalReviews').textContent = totalReviews;
     document.getElementById('averageRating').textContent = averageRating;
     document.getElementById('fiveStarCount').textContent = fiveStarCount;
-  }
-
-  escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
   }
 }
 
