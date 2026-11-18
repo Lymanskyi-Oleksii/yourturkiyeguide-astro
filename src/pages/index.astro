@@ -2,16 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CategoryCard from '../components/CategoryCard.astro';
 import TourCard from '../components/TourCard.astro';
-import allTours from '../content/personalised.json';
+import { tours as allTours, tourHref, categoryTours } from '../data/tours';
 
 const popularSlugs = ['hello', 'stambul', 'bosphorus'];
 const popularTours = popularSlugs
 	.map((slug) => allTours.find((t) => t.slug === slug))
 	.filter((t): t is (typeof allTours)[number] => t !== undefined);
-
-const categoryTours = Object.fromEntries(
-	allTours.map((t) => [t.ratingCategory, { title: t.title, href: `/excursions/personalised/${t.slug}` }])
-);
 
 const formats = [
 	{
@@ -72,7 +68,7 @@ const formats = [
 				<h2 class="section-title">Популярные экскурсии</h2>
 				<div class="card-container">
 					{popularTours.map((tour) => (
-						<TourCard basePath="/excursions/personalised" {...tour} />
+						<TourCard href={tourHref(tour)} {...tour} />
 					))}
 				</div>
 				<div class="section-cta">

@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TourCard from '../../components/TourCard.astro';
-import tours from '../../content/personalised.json';
+import { tours as allTours, tourHref } from "../../data/tours";
+const tours = allTours.filter((t) => t.section === "personalised");
 import TourCTA from '../../components/tour/TourCTA.astro'
 
 // Підписи тем; список варіантів будується з даних, тому порожніх не буде
@@ -93,7 +94,7 @@ const categories = [...new Set(tours.map((t) => t.category))];
                 </div>
 
                 <div class="card-container" id="cardContainer">
-                    {tours.map((tour) => <TourCard basePath="/excursions/personalised" {...tour} />)}
+                    {tours.map((tour) => <TourCard href={tourHref(tour)} {...tour} />)}
                 </div>
 
                 <div class="no-results" id="noResults" style="display: none;">

@@ -1,6 +1,6 @@
 ---
 interface Props {
-    basePath: string;
+    href: string;
     slug: string;
     title: string;
     description: string;
@@ -13,9 +13,9 @@ interface Props {
     ratingCategory: string;
 }
 
-const { basePath, slug, title, description, image, durationValue, durationLabel, price, priceLabel, category, ratingCategory } = Astro.props;
+const { href, title, description, image, durationValue, durationLabel, price, priceLabel, category, ratingCategory } = Astro.props;
 ---
-<a href={`${basePath}/${slug}`} class="clickable-link">
+<a href={href} class="clickable-link">
     <div
             class="card"
             style={`background-image: url('${image}');`}

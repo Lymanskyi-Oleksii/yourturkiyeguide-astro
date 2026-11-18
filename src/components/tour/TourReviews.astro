@@ -1,15 +1,11 @@
 ---
-import tours from '../../content/personalised.json';
+import { categoryTours } from '../../data/tours';
 
 interface Props {
     category: string;
     categoryDisplayName: string;
     }
 const { category, categoryDisplayName } = Astro.props;
-
-const categoryTours = Object.fromEntries(
-tours.map((t) => [t.ratingCategory, { title: t.title, href: `/excursions/personalised/${t.slug}` }])
-);
 ---
 <div class="reviews-container">
     <div class="reviews-section">
