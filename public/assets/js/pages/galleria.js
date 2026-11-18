@@ -702,12 +702,6 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
-// Обробка помилок
-window.addEventListener('error', function(e) {
-  console.error('Gallery error:', e.error);
-  showError('Сталася помилка в галереї. Перевірте консоль для деталей.');
-});
-
 // Обробка зміни орієнтації на мобільних
 window.addEventListener('orientationchange', function() {
   if (isMobile) {
