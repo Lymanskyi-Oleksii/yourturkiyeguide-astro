@@ -3,6 +3,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import TourCard from '../../components/TourCard.astro';
 import tours from '../../content/personalised.json';
 import TourCTA from '../../components/tour/TourCTA.astro'
+
+// Підписи тем; список варіантів будується з даних, тому порожніх не буде
+const LABELS: Record<string, string> = {
+    'историческая': 'Историческая',
+    'искусство': 'Искусство',
+    'морская прогулка': 'Морская прогулка',
+    'многодневный': 'Многодневный тур',
+};
+const categories = [...new Set(tours.map((t) => t.category))];
 ---
 <BaseLayout title="Индивидуальные экскурсии" description="Индивидуальные экскурсии по Стамбулу под ваши интересы.">
     <Fragment slot="head">
@@ -48,11 +57,7 @@ import TourCTA from '../../components/tour/TourCTA.astro'
                                 <label class="filter-label">Тематика экскурсии</label>
                                 <select class="filter-select" id="categorySelect">
                                     <option value="">Все темы</option>
-                                    <option value="историческая">Историческая</option>
-                                    <option value="мистецька">Мистецька</option>
-                                    <option value="шопинг">Шопинг</option>
-                                    <option value="гастро-тур">Гастро-тур</option>
-                                    <option value="фототур">Фототур</option>
+                                    {categories.map((c) => <option value={c}>{LABELS[c] ?? c}</option>)}
                                 </select>
                             </div>
 
@@ -63,12 +68,11 @@ import TourCTA from '../../components/tour/TourCTA.astro'
                                     <option value="3">До 3 часов</option>
                                     <option value="4">До 4 часов</option>
                                     <option value="6">До 6 часов</option>
-                                    <option value="6+">Больше 6 часов</option>
                                 </select>
                             </div>
 
                             <div class="filter-group">
-                                <label class="filter-label">Цена (USD)</label>
+                                <label class="filter-label">Цена (EUR)</label>
                                 <div class="price-inputs">
                                     <input type="number" class="filter-select price-input" id="priceFromInput" placeholder="От" min="0">
                                     <span class="price-separator">-</span>

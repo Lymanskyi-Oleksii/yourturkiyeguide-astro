@@ -20,7 +20,7 @@
     "durationLabel": "⏱️ 3,5ч",
     "price": 155,
     "priceLabel": "€155",
-    "category": "мистецька",
+    "category": "искусство",
     "ratingCategory": "colourful"
   },
   {
@@ -68,7 +68,7 @@
     "durationLabel": "⏱️ 2 ч",
     "price": 280,
     "priceLabel": "€280+",
-    "category": "bosphorus",
+    "category": "морская прогулка",
     "ratingCategory": "bosphorus"
   }
 ]

@@ -3,6 +3,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import TourCard from '../../components/TourCard.astro';
 import tours from '../../content/copyright.json';
 import TourCTA from "../../components/tour/TourCTA.astro";
+
+// Підписи типів; список варіантів будується з даних
+const LABELS: Record<string, string> = {
+    'историческая': 'Исторические',
+    'искусство': 'Художественные',
+    'морская прогулка': 'Морские прогулки',
+    'многодневный': 'Многодневные туры',
+};
+const categories = [...new Set(tours.map((t) => t.category))];
+// Пошук і фільтри мають сенс лише коли турів достатньо
+const showFilters = tours.length > 3;
 ---
 <BaseLayout title="Авторские туры" description="Авторские туры по Турции — индивидуальная программа и нестандартные маршруты.">
     <Fragment slot="head">
@@ -21,6 +32,7 @@ import TourCTA from "../../components/tour/TourCTA.astro";
                     <p>Тогда мои авторские предложения именно для вас! Полная организация вашего отдыха, нестандартная программа и индивидуальный подход с меня, а все, что остается вам - только приехать и наслаждаться прекрасным отдыхом!</p>
                 </div>
 
+                {showFilters && (
                 <div class="search-filter">
                     <div class="search-box">
                         <input type="text" class="search-input" id="searchInput" placeholder="Поиск туров...">
@@ -48,11 +60,7 @@ import TourCTA from "../../components/tour/TourCTA.astro";
                                 <label class="filter-label">Тип туру</label>
                                 <select class="filter-select" id="categorySelect">
                                     <option value="">Все туры</option>
-                                    <option value="экскурсия">Экскурсии (1 день)</option>
-                                    <option value="многодневный">Многодневные туры</option>
-                                    <option value="историческая">Исторические</option>
-                                    <option value="мистецька">Художественные</option>
-                                    <option value="bosphorus">По Босфору</option>
+                                    {categories.map((c) => <option value={c}>{LABELS[c] ?? c}</option>)}
                                 </select>
                             </div>
 
@@ -87,15 +95,18 @@ import TourCTA from "../../components/tour/TourCTA.astro";
                         <div id="filterTags"></div>
                     </div>
                 </div>
+                )}
 
                 <div class="card-container" id="cardContainer">
                     {tours.map((tour) => <TourCard basePath="/excursions/copyright" {...tour} />)}
                 </div>
 
+                {showFilters && (
                 <div class="no-results" id="noResults" style="display: none;">
                     <h3>Экскурсии не найдены</h3>
                     <p>Попробуйте изменить параметры поиска</p>
                 </div>
+                )}
 
                 <TourCTA
                         title="Не нашли нужную экскурсию?"
@@ -106,6 +117,6 @@ import TourCTA from "../../components/tour/TourCTA.astro";
         </div>
     </section>
 
-    <script is:inline src="/assets/js/pages/search.js"></script>
+    {showFilters && <script is:inline src="/assets/js/pages/search.js"></script>}
     <script is:inline type="module" src="/assets/js/pages/cards-rating.js"></script>
 </BaseLayout>
