@@ -16,8 +16,9 @@ const { href, image, title, description } = Astro.props;
             <!-- Звичайний img замість background-image, щоб фото вантажилось ліниво -->
             <img class="card-image" src={imageVariant(image, 'medium')} alt="" width="320" height="420" loading="lazy" decoding="async">
             <div class="card-content">
-                <h1>{title}</h1>
-                <button class="arrow-button"><span class="arrow">→</span></button>
+                <h3>{title}</h3>
+                <!-- span, а не button: кнопка всередині посилання — невалідний HTML (пункт 5.4) -->
+                <span class="arrow-button" aria-hidden="true"><span class="arrow">→</span></span>
             </div>
         </div>
     </a>

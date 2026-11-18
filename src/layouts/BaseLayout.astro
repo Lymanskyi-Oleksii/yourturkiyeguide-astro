@@ -3,11 +3,20 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import { SITE_NAME } from '../data/site';
+import { canonicalUrl } from '../lib/urls';
 
 const {
     title = SITE_NAME,
     description = "Индивидуальные и групповые экскурсии по Турции с профессиональным гидом. Яхты, трансфер, медицинский туризм.",
+    // Картинка для прев'ю посилання; сторінка може передати свою (горизонтальну, 1200×630)
+    ogImage = '/og-cover.jpg',
+    // true — сторінку не індексувати і не давати їй канонічної адреси (наприклад, 404)
+    noindex = false,
 } = Astro.props;
+
+// Повні адреси: месенджери й пошуковики не розуміють відносних шляхів (пункти 5.1, 5.2)
+const canonical = canonicalUrl(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(ogImage, Astro.site).href;
 
 // Заголовок вкладки: «Сторінка | TravelsTurkey»; якщо заголовок і є назвою — без повтору
 const fullTitle = title === SITE_NAME ? SITE_NAME : `${title} | ${SITE_NAME}`;
@@ -19,13 +28,19 @@ const fullTitle = title === SITE_NAME ? SITE_NAME : `${title} | ${SITE_NAME}`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{fullTitle}</title>
     <meta name="description" content={description}>
+    {noindex ? <meta name="robots" content="noindex"> : <link rel="canonical" href={canonical}>}
 
     <!-- Open Graph — як виглядатиме посилання при шарингу в Telegram/WhatsApp/Facebook -->
     <meta property="og:title" content={fullTitle}>
     <meta property="og:site_name" content={SITE_NAME}>
     <meta property="og:description" content={description}>
-    <meta property="og:image" content="/assets/img/ferat/home.webp">
+    {!noindex && <meta property="og:url" content={canonical}>}
+    <meta property="og:image" content={ogImageUrl}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta name="twitter:card" content="summary_large_image">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
