@@ -1,15 +1,58 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import TourCTA from '../../components/tour/TourCTA.astro';
 ---
-<BaseLayout title="Шопинг" description="Шопинг в Турции.">
+<BaseLayout title="Шопинг" description="Шопинг в Стамбуле с местным гидом: места, где покупают сами турки, а не только туристы.">
+    <Fragment slot="head">
+        <link rel="stylesheet" href="/assets/css/pages/excursions.css">
+    </Fragment>
+
     <section>
         <div class="container">
-            <article>
-                <div class="tours-section">
-                    <h1>Шопинг</h1>
-                    <p>Раздел в разработке.</p>
+            <article class="container-article">
+                <h1 class="page-title">Шопинг</h1>
+
+                <div class="service-text">
+                    <p>Покажу, где покупают сами турки, а не только туристы. Вместе составим маршрут под ваш список: одежда, текстиль, украшения, сладости, специи или подарки для близких.</p>
+                    <p>Помогу объясниться с продавцами и сориентироваться в ценах, чтобы покупки приносили удовольствие, а не усталость. Шопинг легко совместить с экскурсией по городу или <a href="/services/transfer">трансфером</a> в аэропорт в день вылета.</p>
                 </div>
+
+                <TourCTA
+                        title="Собираетесь за покупками?"
+                        subtitle="Напишите, что хотите купить и сколько у вас времени, — составлю маршрут."
+                />
             </article>
         </div>
     </section>
 </BaseLayout>
+
+<style>
+    .page-title {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 24px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.3;
+    }
+
+    .service-text {
+        max-width: 760px;
+        margin: 0 auto;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: #2c3e50;
+    }
+
+    .service-text p {
+        margin-bottom: 16px;
+    }
+
+    .service-text a {
+        color: #2980b9;
+        text-decoration: underline;
+    }
+</style>

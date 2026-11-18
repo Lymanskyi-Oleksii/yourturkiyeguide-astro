@@ -143,7 +143,7 @@ function createThumbnails() {
     const thumbSrc = slide.thumb || slide.image;
     const img = createImageElement(
         thumbSrc,
-        slide.title || `Зображення ${index + 1}`,
+        slide.title || `Изображение ${index + 1}`,
         () => {
           const placeholder = thumbnail.querySelector('.photo-thumbnail-placeholder');
           if (placeholder) {
@@ -159,7 +159,7 @@ function createThumbnails() {
           placeholder.className = 'photo-thumbnail-placeholder';
           placeholder.innerHTML = `
             <span>❌</span>
-            <span>Помилка</span>
+            <span>Ошибка</span>
           `;
           thumbnail.innerHTML = '';
           thumbnail.appendChild(placeholder);
@@ -171,7 +171,7 @@ function createThumbnails() {
     placeholder.className = 'photo-thumbnail-placeholder';
     placeholder.innerHTML = `
       <span>📷</span>
-      <span>Завантаження...</span>
+      <span>Загрузка...</span>
     `;
 
     thumbnail.appendChild(placeholder);
@@ -203,13 +203,13 @@ function changeSlide(index, element) {
   mainDisplay.innerHTML = `
     <div class="photo-placeholder">
       <span>📷</span>
-      <span>Завантаження зображення...</span>
+      <span>Загрузка изображения...</span>
     </div>
   `;
 
   const img = createImageElement(
       slide.image,
-      slide.title || `Зображення ${index + 1}`,
+      slide.title || `Изображение ${index + 1}`,
       () => {
         mainDisplay.innerHTML = '';
         mainDisplay.appendChild(img);
@@ -234,11 +234,11 @@ function changeSlide(index, element) {
         mainDisplay.innerHTML = `
           <div class="photo-placeholder">
             <span>❌</span>
-            <span>Не вдалося завантажити зображення</span>
+            <span>Не удалось загрузить изображение</span>
             <small style="margin-top: 10px; opacity: 0.7;">${slide.image}</small>
           </div>
         `;
-        showError(`Не вдалося завантажити зображення: ${slide.title || 'Зображення ' + (index + 1)}`);
+        showError(`Не удалось загрузить изображение: ${slide.title || 'Изображение ' + (index + 1)}`);
       }
   );
 
@@ -358,7 +358,7 @@ function updateFullscreenContent() {
     fullscreenMain.innerHTML = `
       <div class="photo-placeholder">
         <span>🎬</span>
-        <span>Завантаження відео...</span>
+        <span>Загрузка видео...</span>
       </div>
     `;
 
@@ -388,22 +388,22 @@ function updateFullscreenContent() {
       fullscreenMain.innerHTML = `
         <div class="photo-placeholder">
           <span>❌</span>
-          <span>Не вдалося завантажити відео</span>
+          <span>Не удалось загрузить видео</span>
         </div>
       `;
-      showError(`Не вдалося завантажити відео: ${slide.title || 'Відео ' + (currentIndex + 1)}`);
+      showError(`Не удалось загрузить видео: ${slide.title || 'Видео ' + (currentIndex + 1)}`);
     });
   } else {
     fullscreenMain.innerHTML = `
       <div class="photo-placeholder">
         <span>📷</span>
-        <span>Завантаження зображення...</span>
+        <span>Загрузка изображения...</span>
       </div>
     `;
 
     const img = createImageElement(
         slide.image,
-        slide.title || `Зображення ${currentIndex + 1}`,
+        slide.title || `Изображение ${currentIndex + 1}`,
         () => {
           fullscreenMain.innerHTML = '';
           fullscreenMain.appendChild(img);
@@ -412,7 +412,7 @@ function updateFullscreenContent() {
           fullscreenMain.innerHTML = `
             <div class="photo-placeholder">
               <span>❌</span>
-              <span>Не вдалося завантажити зображення</span>
+              <span>Не удалось загрузить изображение</span>
             </div>
           `;
         }
@@ -584,18 +584,18 @@ function handleTouchEnd(e) {
 
 function showHelp() {
   const helpText = `
-Клавіатурні скорочення:
-- ↑/↓ - Навігація по слайдах
-- ←/→ - Навігація в повноекранному режимі
-- Enter - Повноекранний режим
-- Escape - Вихід/Скидання
-- H - Ця довідка
+Клавиатурные сокращения:
+- ↑/↓ — переход между слайдами
+- ←/→ — переход в полноэкранном режиме
+- Enter — полноэкранный режим
+- Escape — выход/сброс
+- H — эта справка
 
-Мобільне управління:
-- Тап по мініатюрі - Перехід до слайду
-- Тап по головному зображенню - Повноекранний режим
-- Свайп вліво/вправо - Навігація
-- Свайп вгору/вниз - Навігація (крім повноекранного режиму)
+Управление на телефоне:
+- Нажатие на миниатюру — переход к слайду
+- Нажатие на главное фото — полноэкранный режим
+- Свайп влево/вправо — переход между слайдами
+- Свайп вверх/вниз — переход между слайдами (кроме полноэкранного режима)
   `;
 
   alert(helpText);

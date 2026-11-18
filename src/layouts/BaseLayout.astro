@@ -2,22 +2,27 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { SITE_NAME } from '../data/site';
 
 const {
-    title = "Гид по Турции",
+    title = SITE_NAME,
     description = "Индивидуальные и групповые экскурсии по Турции с профессиональным гидом. Яхты, трансфер, медицинский туризм.",
 } = Astro.props;
+
+// Заголовок вкладки: «Сторінка | TravelsTurkey»; якщо заголовок і є назвою — без повтору
+const fullTitle = title === SITE_NAME ? SITE_NAME : `${title} | ${SITE_NAME}`;
 ---
 <!doctype html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title}</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description}>
 
     <!-- Open Graph — як виглядатиме посилання при шарингу в Telegram/WhatsApp/Facebook -->
-    <meta property="og:title" content={title}>
+    <meta property="og:title" content={fullTitle}>
+    <meta property="og:site_name" content={SITE_NAME}>
     <meta property="og:description" content={description}>
     <meta property="og:image" content="/assets/img/ferat/home.webp">
     <meta property="og:type" content="website">
