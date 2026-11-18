@@ -89,7 +89,7 @@ import TourCTA from '../../components/tour/TourCTA.astro'
                 </div>
 
                 <div class="card-container" id="cardContainer">
-                    {tours.map((tour) => <TourCard basePath="personalised" {...tour} />)}
+                    {tours.map((tour) => <TourCard basePath="/excursions/personalised" {...tour} />)}
                 </div>
 
                 <div class="no-results" id="noResults" style="display: none;">
