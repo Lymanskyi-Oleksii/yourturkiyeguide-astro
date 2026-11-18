@@ -1,12 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+// Стилі підключаються імпортом: Astro їх мініфікує й дає назви з хешем (пункт 6.4)
+import '../styles/pages/reviews.css';
 import TourReviews from '../components/tour/TourReviews.astro';
 ---
 <BaseLayout title="Отзывы" description="Отзывы клиентов о экскурсиях по Турции с гидом Фыратом Динлером.">
-    <Fragment slot="head">
-        <link rel="stylesheet" href="/assets/css/pages/reviews.css">
-    </Fragment>
-
     <section>
         <div class="container">
             <article>

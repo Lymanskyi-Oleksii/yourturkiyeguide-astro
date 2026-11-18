@@ -1,0 +1,11 @@
+/* Сторінка туру (excursions/[section]/[slug].astro).
+   Файли підключаються тут, а не окремими імпортами, щоб Vite зібрав їх в один файл
+   саме в цьому порядку: від порядку залежить, яке правило перемагає (пункт 6.4). */
+@import './pages/booking.css';
+@import './layout/tourMapSelected.css';
+@import './layout/route.css';
+@import './layout/galleria.css';
+@import './layout/accordion.css';
+@import './pages/reviews.css';
+@import './layout/fix.css';
+@import './layout/reservation.css';

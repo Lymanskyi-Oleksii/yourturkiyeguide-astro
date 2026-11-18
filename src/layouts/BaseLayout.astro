@@ -1,7 +1,8 @@
 ---
+// Стилі підключаються імпортом: Astro їх мініфікує й дає назви з хешем (пункт 6.4)
+import '../styles/base.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import '../styles/global.css';
 import { SITE_NAME } from '../data/site';
 import { canonicalUrl } from '../lib/urls';
 
@@ -47,14 +48,15 @@ const fullTitle = title === SITE_NAME ? SITE_NAME : `${title} | ${SITE_NAME}`;
     <!-- Montserrat має кирилицю; змінний шрифт: один файл на всі накреслення 400–700 -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400..700&display=swap" rel="stylesheet">
     <link rel="icon" href="/icon.webp" type="image/webp">
-    <link rel="stylesheet" href="/assets/css/pages/main_style.css">
-    <link rel="stylesheet" href="/assets/css/layout/style.css">
     <slot name="head" />
 </head>
 <body>
 <Header />
 <slot />
 <Footer />
-<script is:inline src="/assets/js/script.js"></script>
+<script>
+    // Підсвічування активного пункту меню (пункт 6.4: скрипт збирається Astro)
+    import '../scripts/script.js';
+</script>
 </body>
 </html>

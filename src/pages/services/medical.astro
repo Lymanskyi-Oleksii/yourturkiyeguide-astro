@@ -1,12 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+// Стилі підключаються імпортом: Astro їх мініфікує й дає назви з хешем (пункт 6.4)
+import '../../styles/pages/excursions.css';
 import TourCTA from '../../components/tour/TourCTA.astro';
 ---
 <BaseLayout title="Медицинский туризм" description="Медицинский туризм в Турции: подбор клиники под вашу задачу, перевод и сопровождение на всех этапах лечения.">
-    <Fragment slot="head">
-        <link rel="stylesheet" href="/assets/css/pages/excursions.css">
-    </Fragment>
-
     <section>
         <div class="container">
             <article class="container-article">

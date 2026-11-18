@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+// Стилі підключаються імпортом: Astro їх мініфікує й дає назви з хешем (пункт 6.4)
+import '../../styles/section.css';
 import CategoryCard from '../../components/CategoryCard.astro';
 import ExcursionsFAQ from '../../components/tour/ExcursionsFAQ.astro';
 import TourCTA from '../../components/tour/TourCTA.astro';
@@ -26,11 +28,6 @@ const categories = [
 ];
 ---
 <BaseLayout title="Экскурсии" description="Индивидуальные, групповые и авторские экскурсии по Турции с профессиональным гидом.">
-    <Fragment slot="head">
-        <link rel="stylesheet" href="/assets/css/pages/excursions.css">
-        <link rel="stylesheet" href="/assets/css/layout/accordion.css">
-    </Fragment>
-
     <section>
         <div class="container">
             <article class="container-article">
@@ -46,7 +43,6 @@ const categories = [
         </div>
     </section>
 
-    <script is:inline src="/assets/js/pages/accordion.js"></script>
 </BaseLayout>
 
 <style>

@@ -33,3 +33,8 @@ const photos = Astro.props.photos.map((photo) => ({
 <script is:inline define:vars={{ photos }}>
     window.gallerySlides = photos;
 </script>
+
+<script>
+    // Галерея фото і повноекранний перегляд (кнопки оверлея обробляються в цьому скрипті)
+    import '../../scripts/pages/galleria.js';
+</script>

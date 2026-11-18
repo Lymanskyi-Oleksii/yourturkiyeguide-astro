@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+// Стилі підключаються імпортом: Astro їх мініфікує й дає назви з хешем (пункт 6.4)
+import '../../styles/layout/accordion.css';
 import PhotoSplide from '../../components/tour/PhotoSplide.astro';
 import ServicesFAQ from '../../components/tour/ServicesFAQ.astro';
 import TourCTA from '../../components/tour/TourCTA.astro';
@@ -33,10 +35,6 @@ const galleryItems = [
 ];
 ---
 <BaseLayout title="Яхты" description="Аренда частных яхт в Стамбуле — прогулки по Босфору, романтические ужины и праздники на воде.">
-    <Fragment slot="head">
-        <link rel="stylesheet" href="/assets/css/layout/accordion.css">
-    </Fragment>
-
     <section>
         <div class="container">
             <article>
@@ -73,7 +71,6 @@ const galleryItems = [
         </div>
     </section>
 
-    <script is:inline src="/assets/js/pages/accordion.js"></script>
 
     <style>
         .yachts-intro h1 {

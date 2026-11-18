@@ -29,7 +29,7 @@ const { href, title, description, image, durationValue, durationLabel, price, pr
         <!-- Звичайний img замість background-image, щоб фото вантажилось ліниво -->
         <img class="card-image" src={imageVariant(image, 'medium')} alt="" width="320" height="420" loading="lazy" decoding="async">
         <div class="card-rating" data-category={ratingCategory}>
-            <span class="text-gray-700 text-base leading-7">Загрузка…</span>
+            <span class="rating-loading">Загрузка…</span>
         </div>
         <div class="card-content">
             <div class="card-text">
@@ -44,6 +44,11 @@ const { href, title, description, image, durationValue, durationLabel, price, pr
         </div>
     </div>
 </a>
+
+<script>
+    // Рейтинг туру на картці з відгуків у Firestore
+    import '../scripts/pages/cards-rating.js';
+</script>
 
 <style>
     /* Фото картки на весь фон, під затемненням (::before) і текстом */
@@ -61,6 +66,13 @@ const { href, title, description, image, durationValue, durationLabel, price, pr
         justify-content: space-between !important;
         align-items: flex-end !important;
         text-align: left !important;
+    }
+
+    /* Підпис «Загрузка…» до приходу рейтингу (раніше — класи Tailwind) */
+    .rating-loading {
+        color: #364153;
+        font-size: 1rem;
+        line-height: 1.75rem;
     }
 
     .card-text {

@@ -1,8 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+// Стилі підключаються імпортом: Astro їх мініфікує й дає назви з хешем (пункт 6.4)
+import '../styles/home.css';
 import CategoryCard from '../components/CategoryCard.astro';
 import TourCard from '../components/TourCard.astro';
-import { tours as allTours, tourHref, categoryTours } from '../data/tours';
+import { SITE } from '../data/site';
+import { getTours, getCategoryTours, tourHref } from '../data/tours';
+
+const allTours = await getTours();
+const categoryTours = await getCategoryTours();
 
 const popularSlugs = ['hello', 'stambul', 'bosphorus'];
 const popularTours = popularSlugs
@@ -31,10 +37,6 @@ const formats = [
 ];
 ---
 <BaseLayout title="Гид по Турции" description="Фырат Динлер — профессиональный гид по Турции. Индивидуальные и групповые экскурсии, яхты, трансфер, шопинг и медицинский туризм.">
-	<Fragment slot="head">
-		<link rel="stylesheet" href="/assets/css/pages/excursions.css">
-		<link rel="stylesheet" href="/assets/css/pages/reviews.css">
-	</Fragment>
 	<section>
 		<div class="container">
 			<article class="hero">
@@ -42,8 +44,8 @@ const formats = [
 					<h1 class="gradient-text hero-title">Ваши незабываемые путешествия по Турции</h1>
 					<p class="hero-subtitle">Приглашаю вас заглянуть в мир чарующего Востока с его легендами и шедеврами. Полное погружение в историю и культуру Турции под сопровождением профессионального гида.</p>
 					<div class="hero-buttons">
-						<a href="/excursions/excursions" class="hero-btn hero-btn-primary">Смотреть экскурсии</a>
-						<a href="https://t.me/+905443266871" target="_blank" class="hero-btn hero-btn-secondary">Связаться с гидом</a>
+						<a href="/excursions" class="hero-btn hero-btn-primary">Смотреть экскурсии</a>
+						<a href={SITE.telegram} target="_blank" class="hero-btn hero-btn-secondary">Связаться с гидом</a>
 					</div>
 				</div>
 				<div class="hero-image">
@@ -73,7 +75,7 @@ const formats = [
 					))}
 				</div>
 				<div class="section-cta">
-					<a href="/excursions/excursions" class="hero-btn hero-btn-secondary">Смотреть все экскурсии</a>
+					<a href="/excursions" class="hero-btn hero-btn-secondary">Смотреть все экскурсии</a>
 				</div>
 			</article>
 		</div>
@@ -123,17 +125,21 @@ const formats = [
 	<section>
 		<div class="container">
 			<h2 class="section-title">Отзывы наших туристов</h2>
-			<div id="homeReviews" class="reviews-grid"></div>
+			<div id="homeReviews" class="reviews-grid" data-category-tours={JSON.stringify(categoryTours)}></div>
 			<div class="section-cta">
 				<a href="/reviews" class="hero-btn hero-btn-secondary">Все отзывы →</a>
 			</div>
 		</div>
 	</section>
 
-	<script type="module" define:vars={{ categoryTours }}>
-		import('/assets/js/pages/home-reviews.js').then((mod) => {
-			mod.renderTopReviews('homeReviews', categoryTours, 3);
-		});
+	<script>
+		// Три найкращі відгуки; словник турів — з data-атрибута (пункт 6.4)
+		import { renderTopReviews } from '../scripts/pages/home-reviews.js';
+
+		const box = document.getElementById('homeReviews');
+		if (box) {
+			renderTopReviews('homeReviews', JSON.parse(box.dataset.categoryTours || '{}'), 3);
+		}
 	</script>
 
 	<section>
@@ -142,14 +148,13 @@ const formats = [
 				<h2 class="section-title final-cta-title">Готовы открыть Турцию по-новому?</h2>
 				<p class="final-cta-text">Подберём экскурсию под ваши интересы, время и бюджет</p>
 				<div class="hero-buttons final-cta-buttons">
-					<a href="/excursions/excursions" class="hero-btn hero-btn-primary">Выбрать экскурсию</a>
-					<a href="https://t.me/+905443266871" target="_blank" class="hero-btn hero-btn-secondary">Связаться с гидом</a>
+					<a href="/excursions" class="hero-btn hero-btn-primary">Выбрать экскурсию</a>
+					<a href={SITE.telegram} target="_blank" class="hero-btn hero-btn-secondary">Связаться с гидом</a>
 				</div>
 			</article>
 		</div>
 	</section>
 
-	<script type="module" src="/assets/js/pages/cards-rating.js"></script>
 </BaseLayout>
 
 <style>

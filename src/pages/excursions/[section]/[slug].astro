@@ -1,0 +1,119 @@
+---
+// Один шаблон для всіх сторінок турів (пункт 6.1 плану).
+// Дані й текст туру — у src/content/tours/<slug>.md, адреса — /excursions/<section>/<slug>
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+// Стилі підключаються імпортом: Astro їх мініфікує й дає назви з хешем (пункт 6.4)
+import '../../../styles/tour.css';
+import TourHero from '../../../components/tour/TourHero.astro';
+import TourGalleryCarousel from '../../../components/tour/TourGalleryCarousel.astro';
+import BookingWidget from '../../../components/tour/BookingWidget.astro';
+import PhotoGallerySecondary from '../../../components/tour/PhotoGallerySecondary.astro';
+import TourAccordion from '../../../components/tour/TourAccordion.astro';
+import TourCTA from '../../../components/tour/TourCTA.astro';
+import TourReviews from '../../../components/tour/TourReviews.astro';
+import FloatingBookingBtn from '../../../components/tour/FloatingBookingBtn.astro';
+import PhotoFullscreenOverlay from '../../../components/tour/PhotoFullscreenOverlay.astro';
+
+export async function getStaticPaths() {
+    const tours = await getCollection('tours');
+    return tours.map((tour) => ({
+        params: { section: tour.data.section, slug: tour.id },
+        props: { tour },
+    }));
+}
+
+const { tour } = Astro.props;
+const t = tour.data;
+const { Content } = await render(tour);
+
+// Фото галереї: 1.webp … count.webp, відео (якщо є) — останнім слайдом
+const galleryPhotos = [
+    ...Array.from({ length: t.gallery.count }, (_, i) => ({
+        image: `${t.gallery.folder}/${i + 1}.webp`,
+        title: `Фото ${i + 1}`,
+    })),
+    ...(t.gallery.video
+        ? [{ image: t.gallery.video.poster, video: t.gallery.video.src, title: t.gallery.video.title }]
+        : []),
+];
+
+const route = t.route ?? [];
+const whatsappMessage = encodeURIComponent(t.whatsappText);
+---
+<BaseLayout title={t.title} description={t.description}>
+    <section>
+        <div class="container">
+            <article>
+
+                <TourHero image={t.heroImage} title={t.heroTitle ?? t.title} subtitle={t.subtitle} />
+
+                <div class="excursion-text">
+                    <Content />
+
+                    <h2 class="section-title">{t.programTitle}</h2>
+
+                    {route.length > 0 && t.routePlacement === 'beforeProgram' && <TourGalleryCarousel items={route} />}
+
+                    {t.program.map((part) => (
+                        <>
+                            <div class="subsection-title">{part.title}</div>
+                            <p class="subsection-text" set:html={part.text} />
+                        </>
+                    ))}
+
+                    {route.length > 0 && t.routePlacement === 'afterProgram' && <TourGalleryCarousel items={route} />}
+
+                    <div class="info-sections">
+                        {t.info.map((block) => (
+                            <div class="info-block">
+                                <h3 class="info-title">{block.title}</h3>
+                                <ul>
+                                    {block.items.map((item) => <li set:html={item} />)}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div class="meeting-point">
+                        <h3 class="info-title">{t.meeting.title}</h3>
+                        <p set:html={t.meeting.text} />
+                    </div>
+                </div>
+
+                <div class="booking-conditions">
+                    <h2 class="title">Условия бронирования</h2>
+                    <div class="conditions-grid">
+                        {t.conditions.map((c) => (
+                            <div class="condition-card">
+                                <span class="condition-icon">{c.icon}</span>
+                                <h3 class="condition-title">{c.title}</h3>
+                                <p class="condition-description" set:html={c.text} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <BookingWidget
+                        duration={t.booking.duration}
+                        format={t.booking.format}
+                        method={t.booking.method}
+                        price={t.booking.price}
+                        priceNote={t.booking.priceNote}
+                        whatsappMessage={whatsappMessage}
+                />
+
+                <PhotoGallerySecondary photos={galleryPhotos} />
+
+                <TourAccordion />
+                <TourCTA />
+                <TourReviews category={t.ratingCategory} categoryDisplayName={t.reviewsLabel} />
+
+            </article>
+
+            <FloatingBookingBtn />
+            <PhotoFullscreenOverlay />
+        </div>
+    </section>
+
+</BaseLayout>

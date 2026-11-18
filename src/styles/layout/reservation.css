@@ -5,8 +5,8 @@
 
 .booking-card {
   background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
+  backdrop-filter: blur(25px);
   border-radius: 24px;
   padding: 40px;
   width: 100%;

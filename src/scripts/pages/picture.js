@@ -363,11 +363,14 @@ document.addEventListener('DOMContentLoaded', () => {
     isAutoPlay: () => isAutoPlay
   };
 
-  // Додаємо глобальні функції з префіксом для другої каруселі
-  window.carouselPrevSlide = prevSlide;
-  window.carouselNextSlide = nextSlide;
-  window.carouselGoToSlide = goToSlide;
-  window.toggleAutoPlay = toggleAutoPlay;
+  // Кнопка автопрокрутки (раніше — onclick у розмітці, пункт 6.4)
+  const autoPlayButton = document.querySelector('.auto-play-toggle');
+  if (autoPlayButton) {
+    autoPlayButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleAutoPlay();
+    });
+  }
 
   // 🟢 Ініціалізація
   updateAutoPlayButton();

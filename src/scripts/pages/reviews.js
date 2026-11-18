@@ -4,7 +4,7 @@ import { db, auth } from '../firebase-init.js';
 import { esc } from './review-utils.js';
 import { getVerifiedReviews } from './reviews-data.js';
 
-class ReviewsSystem {
+export class ReviewsSystem {
   constructor(options = {}) {
     this.reviews = [];
     this.selectedRating = 0;

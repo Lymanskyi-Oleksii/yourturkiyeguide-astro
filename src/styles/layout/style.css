@@ -53,8 +53,8 @@ body {
 /* Стилі для статті */
 article {
     background: var(--card-bg);
-    backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
     border-radius: var(--border-radius-md);
     padding: 40px;
     box-shadow: 0 8px 20px var(--shadow-light);
@@ -93,8 +93,8 @@ section {
 /* Стилі для хедера */
 header {
     background: var(--header-bg);
-    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -175,8 +175,8 @@ header {
     top: 100%;
     left: 0;
     background: rgb(194, 212, 240);
-    backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
     box-shadow: 0 8px 16px var(--shadow-medium);
     min-width: 220px;
     z-index: 1001;
@@ -271,8 +271,8 @@ footer {
     left: 0;
     width: 100%;
     background: var(--gradient-mobile-menu);
-    backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     display: flex;
     justify-content: space-around;
@@ -391,8 +391,8 @@ footer {
 
     /* Хедер */
     header {
-        backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
     }
 
     /* Логотип */

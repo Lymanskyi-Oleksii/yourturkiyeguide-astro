@@ -20,7 +20,7 @@ const { items } = Astro.props;
     </div>
 
     <div class="gallery-container">
-        <button class="auto-play-toggle" onclick="toggleAutoPlay()">
+        <button class="auto-play-toggle">
             <span id="autoPlayIcon"><div class="play-triangle"></div></span>
             <span id="autoPlayText">Авто</span>
         </button>
@@ -43,13 +43,18 @@ const { items } = Astro.props;
         </div>
 
         <div class="carousel-controls">
-            <button class="control-btn" onclick="carouselPrevSlide()">‹</button>
+            <button class="control-btn">‹</button>
             <div class="indicators">
                 {items.map((_, i) => (
-                        <div class={`indicator ${i === 0 ? 'active' : ''}`} onclick={`carouselGoToSlide(${i})`} tabindex="0"></div>
+                        <div class={`indicator ${i === 0 ? 'active' : ''}`} tabindex="0"></div>
                 ))}
             </div>
-            <button class="control-btn" onclick="carouselNextSlide()">›</button>
+            <button class="control-btn">›</button>
         </div>
     </div>
 </div>
+
+<script>
+    // Карусель маршруту; кнопки обробляються через addEventListener усередині скрипта
+    import '../../scripts/pages/picture.js';
+</script>

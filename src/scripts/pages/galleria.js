@@ -1,3 +1,6 @@
+// Список фото виставляє компонент PhotoGallerySecondary (window.gallerySlides)
+const gallerySlides = window.gallerySlides || [];
+
 let currentIndex = 0;
 let isFullscreen = false;
 let userHasInteracted = false;
@@ -686,6 +689,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Обробник кліку по overlay для закриття
   const overlay = document.querySelector('.photo-fullscreen-overlay');
   if (overlay) {
+    // Кнопки оверлея (раніше — onclick у розмітці, пункт 6.4)
+    overlay.querySelector('.photo-close-button')?.addEventListener('click', () => closeFullscreen());
+    overlay.querySelector('.photo-nav-prev')?.addEventListener('click', () => navigateFullscreen(-1));
+    overlay.querySelector('.photo-nav-next')?.addEventListener('click', () => navigateFullscreen(1));
+
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
         closeFullscreen();

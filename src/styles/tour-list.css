@@ -1,0 +1,6 @@
+/* Списки турів із фільтром (personalised, copyright).
+   Файли підключаються тут, а не окремими імпортами, щоб Vite зібрав їх в один файл
+   саме в цьому порядку: від порядку залежить, яке правило перемагає (пункт 6.4). */
+@import './pages/excursions.css';
+@import './layout/excursionsCard.css';
+@import './layout/filter.css';

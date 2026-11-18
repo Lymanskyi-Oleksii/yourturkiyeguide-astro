@@ -1,0 +1,87 @@
+---
+// Пошук і фільтри над списком турів (пункт 6.2 плану).
+// Варіанти тем будуються з самих турів, тож порожніх не буде (пункт 2.5).
+// Скрипт src/scripts/pages/search.js знаходить елементи за id.
+import type { Tour } from '../data/tours';
+
+interface Props {
+    tours: Tour[];
+    // Підписи тем: значення category → текст у списку
+    categoryLabels: Record<string, string>;
+    searchPlaceholder: string;
+    categoryLabel: string;
+    allCategoriesLabel: string;
+    // Додати варіант «Несколько дней» у фільтр тривалості (для багатоденних турів)
+    multiDay?: boolean;
+}
+
+const { tours, categoryLabels, searchPlaceholder, categoryLabel, allCategoriesLabel, multiDay = false } = Astro.props;
+const categories = [...new Set(tours.map((t) => t.category))];
+---
+<div class="search-filter">
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder={searchPlaceholder}>
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
+        </svg>
+    </div>
+
+    <div class="filter-controls">
+        <button class="filter-toggle" id="filterToggle">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"></polygon>
+            </svg>
+            Фильтры
+            <svg class="chevron" id="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6,9 12,15 18,9"></polyline>
+            </svg>
+        </button>
+    </div>
+
+    <div class="filter-panel" id="filterPanel">
+        <div class="filter-grid">
+            <div class="filter-group">
+                <label class="filter-label">{categoryLabel}</label>
+                <select class="filter-select" id="categorySelect">
+                    <option value="">{allCategoriesLabel}</option>
+                    {categories.map((c) => <option value={c}>{categoryLabels[c] ?? c}</option>)}
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Продолжительность</label>
+                <select class="filter-select" id="durationSelect">
+                    <option value="">Любая</option>
+                    <option value="3">До 3 часов</option>
+                    <option value="4">До 4 часов</option>
+                    <option value="6">До 6 часов</option>
+                    {multiDay && <option value="дня">Несколько дней</option>}
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Цена (EUR)</label>
+                <div class="price-inputs">
+                    <input type="number" class="filter-select price-input" id="priceFromInput" placeholder="От" min="0">
+                    <span class="price-separator">-</span>
+                    <input type="number" class="filter-select price-input" id="priceToInput" placeholder="До" min="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-actions">
+            <button class="btn-secondary" id="clearFilters">Очистить</button>
+        </div>
+    </div>
+
+    <div class="active-filters" id="activeFilters" style="display: none;">
+        <span class="active-filters-label">Активные фильтры:</span>
+        <div id="filterTags"></div>
+    </div>
+</div>
+
+<script>
+    // Пошук і фільтрація карток
+    import '../scripts/pages/search.js';
+</script>

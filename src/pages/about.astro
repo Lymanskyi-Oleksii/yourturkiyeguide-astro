@@ -1,12 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+// Стилі підключаються імпортом: Astro їх мініфікує й дає назви з хешем (пункт 6.4)
+import '../styles/pages/about.css';
 ---
 
 <BaseLayout title="Обо мне" description="Фырат Динлер — профессиональный гид с лицензией от Министерства культуры и туризма Турции. Более 10 лет опыта в организации экскурсий.">
-    <Fragment slot="head">
-        <link rel="stylesheet" href="/assets/css/pages/about.css">
-    </Fragment>
-
 
     <section>
         <div class="container">

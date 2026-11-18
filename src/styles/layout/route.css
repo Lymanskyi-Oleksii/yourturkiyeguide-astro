@@ -66,8 +66,8 @@
   overflow: hidden;
   background: var(--card-bg);
   /* Оптимізовано для якості зображень */
-  backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   box-shadow: 0 8px 20px var(--shadow-light);
   /* Додано для кращого рендерингу */
   backface-visibility: hidden;
@@ -81,8 +81,8 @@
   z-index: 10;
   box-shadow: 0 20px 40px var(--shadow-medium);
   /* Прибрано blur для активного слайду */
-  backdrop-filter: none;
   -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 .carousel-item.prev {
@@ -98,6 +98,9 @@
 }
 
 .carousel-item.hidden {
+  /* Раніше ці слайди ховав display:none з утиліти .hidden Tailwind;
+     після його видалення (пункт 6.5) ховаємо явно, щоб поведінка не змінилась */
+  display: none;
   transform: translate(-50%, -50%) scale(0.6) rotateY(90deg);
   opacity: 0;
   z-index: 1;
@@ -171,8 +174,8 @@
   border: none;
   border-radius: 50%;
   background: var(--card-bg);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   color: var(--primary);
   font-size: 1.5rem;
   cursor: pointer;
@@ -223,8 +226,8 @@
   right: 20px;
   padding: 10px 20px;
   background: var(--card-bg);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border: none;
   border-radius: var(--border-radius-lg);
   color: var(--primary);
@@ -434,8 +437,8 @@
     width: 260px;
     height: 340px;
     /* Оптимізація для мобільних */
-    backdrop-filter: none;
     -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .carousel-item.active {

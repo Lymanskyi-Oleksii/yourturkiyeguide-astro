@@ -1,4 +1,6 @@
 ---
+import { SITE } from '../../data/site';
+
 interface Props {
     title?: string;
     subtitle?: string;
@@ -12,8 +14,8 @@ const {
 <div class="cta">
     <h2>{title}</h2>
     <p>{subtitle}</p>
-    <a href="https://t.me/+905443266871" target="_blank" class="cta-btn">Связаться в Telegram</a>
-    <a href="https://wa.me/+905443266871" target="_blank" class="cta-btn1">Связаться в WhatsApp</a>
+    <a href={SITE.telegram} target="_blank" class="cta-btn">Связаться в Telegram</a>
+    <a href={SITE.whatsapp} target="_blank" class="cta-btn1">Связаться в WhatsApp</a>
 </div>
 <style>
     .cta {

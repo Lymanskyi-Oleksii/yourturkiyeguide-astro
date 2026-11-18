@@ -1,12 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+// Стилі підключаються імпортом: Astro їх мініфікує й дає назви з хешем (пункт 6.4)
+import '../../styles/pages/excursions.css';
 import TourCTA from '../../components/tour/TourCTA.astro';
 ---
 <BaseLayout title="Шопинг" description="Шопинг в Стамбуле с местным гидом: места, где покупают сами турки, а не только туристы.">
-    <Fragment slot="head">
-        <link rel="stylesheet" href="/assets/css/pages/excursions.css">
-    </Fragment>
-
     <section>
         <div class="container">
             <article class="container-article">
