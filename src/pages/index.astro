@@ -47,7 +47,8 @@ const formats = [
 					</div>
 				</div>
 				<div class="hero-image">
-					<img src="/assets/img/ferat/home.webp" alt="Фырат Динлер" width="400">
+					<!-- Головне фото першого екрана: вантажимо одразу й з пріоритетом -->
+					<img src="/assets/img/ferat/medium/home.webp" alt="Фырат Динлер" width="400" height="534" loading="eager" fetchpriority="high">
 				</div>
 			</article>
 		</div>
@@ -109,7 +110,7 @@ const formats = [
 	<section>
 		<div class="container">
 			<article class="about-teaser">
-				<img src="/assets/img/ferat/about_me.webp" alt="Фырат Динлер" class="about-teaser-photo">
+				<img src="/assets/img/ferat/medium/about_me.webp" alt="Фырат Динлер" class="about-teaser-photo" width="220" height="220" loading="lazy" decoding="async">
 				<div class="about-teaser-text">
 					<h2 class="section-title about-teaser-title">Ваш гид по Турции — Фырат Динлер</h2>
 					<p>Коренной житель Турции с лицензией от Министерства культуры и туризма. Более 10 лет помогаю гостям увидеть страну не как турист, а как местный житель.</p>
@@ -222,6 +223,7 @@ const formats = [
 	.hero-image img {
 		width: 100%;
 		max-width: 320px;
+		height: auto;
 		border-radius: var(--border-radius-md);
 		box-shadow: 0 10px 24px var(--shadow-medium);
 	}

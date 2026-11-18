@@ -1,6 +1,5 @@
-import { collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-import { db } from '../firebase-init.js';
-import { esc, normalizeReview } from './review-utils.js';
+import { esc } from './review-utils.js';
+import { getVerifiedReviews } from './reviews-data.js';
 
 function renderStars(rating) {
     let stars = '';
@@ -15,14 +14,9 @@ export async function renderTopReviews(containerId, categoryTours, count = 3) {
     if (!container) return;
 
     try {
-        const q = query(collection(db, 'reviews'), where('verified', '==', true));
-        const snapshot = await getDocs(q);
-
-        const reviews = [];
-        snapshot.forEach((doc) => {
-            // Дата обчислюється з timestamp, усі поля приводяться до безпечного вигляду
-            reviews.push(normalizeReview(doc.data()));
-        });
+        // Спільний запит із cards-rating.js: колекція читається один раз на сторінку
+        // Копія масиву, щоб сортування не змінювало спільний кеш
+        const reviews = [...await getVerifiedReviews()];
 
         reviews.sort((a, b) => b.rating - a.rating || b.time - a.time);
         const top = reviews.slice(0, count);

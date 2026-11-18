@@ -1,7 +1,14 @@
 ---
-interface Photo { image: string; title: string; video?: string; }
+import { imageVariant } from '../../lib/images';
+
+interface Photo { image: string; title: string; video?: string; thumb?: string; }
 interface Props { photos: Photo[]; }
-const { photos } = Astro.props;
+
+// Мініатюри беремо зі зменшених копій (thumbs/), щоб не вантажити оригінали
+const photos = Astro.props.photos.map((photo) => ({
+    ...photo,
+    thumb: photo.thumb ?? imageVariant(photo.image, 'thumbs'),
+}));
 ---
 <div class="vertical-display" tabindex="0" role="region" aria-label="Фотогалерея">
     <div class="main-photo-display" id="mainPhotoDisplay">

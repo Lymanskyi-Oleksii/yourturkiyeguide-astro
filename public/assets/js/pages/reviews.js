@@ -1,7 +1,8 @@
-import { collection, addDoc, getDocs, orderBy, query, where, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 import { signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 import { db, auth } from '../firebase-init.js';
-import { esc, normalizeReview } from './review-utils.js';
+import { esc } from './review-utils.js';
+import { getVerifiedReviews } from './reviews-data.js';
 
 class ReviewsSystem {
   constructor(options = {}) {
@@ -397,31 +398,16 @@ class ReviewsSystem {
     }
   }
 
-  // 🔧 ИСПРАВЛЕННЫЙ метод загрузки отзывов
+  // Завантаження схвалених відгуків через спільний модуль (один запит на сторінку)
   async loadReviews() {
 
     try {
-      // Попробуем простой запрос только по verified
-      const q = query(
-        collection(this.db, 'reviews'),
-        where('verified', '==', true)
+      const all = await getVerifiedReviews();
+
+      // Фільтруємо за категорією в коді; filter повертає новий масив, кеш не змінюється
+      this.reviews = all.filter((review) =>
+        this.category === 'general' || review.category === this.category
       );
-
-      const querySnapshot = await getDocs(q);
-
-      this.reviews = [];
-      querySnapshot.forEach((doc) => {
-        // Приводимо всі поля до безпечного вигляду (category за замовчуванням 'general')
-        const review = normalizeReview(doc.data());
-
-        // Фильтруем по категории в коде
-        if (this.category === 'general' || review.category === this.category) {
-          this.reviews.push({
-            id: doc.id,
-            ...review
-          });
-        }
-      });
 
       // Сортируем по времени (новые сначала)
       this.reviews.sort((a, b) => b.time - a.time);

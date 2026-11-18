@@ -31,7 +31,7 @@
 
 /* Стилі для body */
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background: var(--gradient-bg);
     background-attachment: fixed;
     color: var(--text-dark);
@@ -122,7 +122,7 @@ header {
 
 .logo-text {
     /*
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     */
     font-size: clamp(20px, 4vw, 26px);
     font-weight: 700;
@@ -149,7 +149,7 @@ header {
 
 .menu nav ul li a {
     /*
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     */
     font-size: 16px;
     font-weight: 500;

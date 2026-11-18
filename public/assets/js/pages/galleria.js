@@ -51,9 +51,13 @@ function preventDoubleAction(callback, delay = 300) {
   };
 }
 
-function createImageElement(src, alt = '', onLoad = null, onError = null) {
+function createImageElement(src, alt = '', onLoad = null, onError = null, lazy = false) {
   const img = document.createElement('img');
-  img.src = src;
+  // loading треба ставити до src, інакше браузер почне вантажити одразу
+  if (lazy) {
+    img.loading = 'lazy';
+    img.decoding = 'async';
+  }
   img.alt = alt;
   img.draggable = false;
 
@@ -67,6 +71,7 @@ function createImageElement(src, alt = '', onLoad = null, onError = null) {
     img.onerror = onError;
   }
 
+  img.src = src;
   return img;
 }
 
@@ -134,8 +139,10 @@ function createThumbnails() {
       });
     }
 
+    // Мініатюра — зменшена копія (thumb); якщо її немає, пробуємо оригінал
+    const thumbSrc = slide.thumb || slide.image;
     const img = createImageElement(
-        slide.image,
+        thumbSrc,
         slide.title || `Зображення ${index + 1}`,
         () => {
           const placeholder = thumbnail.querySelector('.photo-thumbnail-placeholder');
@@ -144,6 +151,10 @@ function createThumbnails() {
           }
         },
         () => {
+          if (thumbSrc !== slide.image && img.getAttribute('src') !== slide.image) {
+            img.src = slide.image;
+            return;
+          }
           const placeholder = document.createElement('div');
           placeholder.className = 'photo-thumbnail-placeholder';
           placeholder.innerHTML = `
@@ -152,7 +163,8 @@ function createThumbnails() {
           `;
           thumbnail.innerHTML = '';
           thumbnail.appendChild(placeholder);
-        }
+        },
+        true
     );
 
     const placeholder = document.createElement('div');

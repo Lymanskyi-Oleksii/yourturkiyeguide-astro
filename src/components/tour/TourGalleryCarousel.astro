@@ -1,4 +1,6 @@
 ---
+import { imageVariant } from '../../lib/images';
+
 interface CarouselItem {
     image: string;
     alt: string;
@@ -30,7 +32,7 @@ const { items } = Astro.props;
                 {items.map((item, i) => (
                         <div class={`carousel-item ${i === 0 ? 'active' : i === 1 ? 'next' : i === items.length - 1 ? 'prev' : 'hidden'}`}>
                             <div class="step-number">{i + 1}</div>
-                            <img src={item.image} alt={item.alt} class="item-image">
+                            <img src={imageVariant(item.image, 'medium')} alt={item.alt} class="item-image" width="350" height="292" loading="lazy" decoding="async">
                             <div class="item-content">
                                 <h3 class="item-title">{item.title}</h3>
                                 <p class="item-description">{item.description}</p>

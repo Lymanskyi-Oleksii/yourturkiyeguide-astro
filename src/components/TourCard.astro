@@ -1,4 +1,6 @@
 ---
+import { imageVariant } from '../lib/images';
+
 interface Props {
     href: string;
     slug: string;
@@ -18,13 +20,14 @@ const { href, title, description, image, durationValue, durationLabel, price, pr
 <a href={href} class="clickable-link">
     <div
             class="card"
-            style={`background-image: url('${image}');`}
             data-title={title}
             data-description={description}
             data-duration={durationValue}
             data-price={price}
             data-category={category}
     >
+        <!-- Звичайний img замість background-image, щоб фото вантажилось ліниво -->
+        <img class="card-image" src={imageVariant(image, 'medium')} alt="" width="320" height="420" loading="lazy" decoding="async">
         <div class="card-rating" data-category={ratingCategory}>
             <span class="text-gray-700 text-base leading-7">Завантаження…</span>
         </div>
@@ -43,6 +46,16 @@ const { href, title, description, image, durationValue, durationLabel, price, pr
 </a>
 
 <style>
+    /* Фото картки на весь фон, під затемненням (::before) і текстом */
+    .card-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+    }
+
     .card-content {
         display: flex !important;
         justify-content: space-between !important;
