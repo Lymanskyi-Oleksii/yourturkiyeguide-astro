@@ -604,8 +604,8 @@ const debouncedNextSlide = debounce(() => {
 }, 250);
 
 document.addEventListener('keydown', (e) => {
-  // Ігноруємо, якщо фокус на інпуті
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+  // Ігноруємо, якщо фокус у полі введення
+  if (e.target.closest('input, textarea, select, [contenteditable="true"]')) {
     return;
   }
 
@@ -625,6 +625,12 @@ document.addEventListener('keydown', (e) => {
         break;
     }
   } else {
+    // Поза повноекранним режимом реагуємо лише коли фокус у галереї
+    const gallery = document.querySelector('.vertical-display');
+    if (!gallery || !gallery.contains(document.activeElement)) {
+      return;
+    }
+
     switch(e.key) {
       case 'ArrowUp':
         e.preventDefault();
