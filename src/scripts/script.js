@@ -43,7 +43,6 @@ function highlightActiveLinks() {
   markSection(document.querySelectorAll('.mobile-menu a'));
   markExact(document.querySelectorAll('.sub-menu a'));
 
-  const activeCount = document.querySelectorAll('.mobile-menu a.active').length;
 }
 
 document.addEventListener('DOMContentLoaded', () => {

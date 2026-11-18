@@ -565,12 +565,3 @@ const styleSheet = document.createElement('style');
 styleSheet.textContent = categoryStyles + captchaStyles;
 document.head.appendChild(styleSheet);
 
-// Экспортируем класс
-window.ReviewsSystem = ReviewsSystem;
-
-// Автоматическая инициализация
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.reviewsConfig) {
-    new ReviewsSystem(window.reviewsConfig);
-  }
-});

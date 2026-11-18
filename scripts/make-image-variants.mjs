@@ -13,7 +13,7 @@ const PUBLIC = 'public';
 const IMG_ROOT = join(PUBLIC, 'assets', 'img');
 const IMAGE_RE = /\.(webp|jpe?g|png)$/i;
 // Іконки маленькі, зменшувати їх не треба
-const SKIP_FOLDERS = new Set(['icon', 'inon_rez']);
+const SKIP_FOLDERS = new Set(['icon']);
 const VARIANT_DIRS = new Set(['thumbs', 'medium']);
 
 // На Windows sharp тримає файл відкритим, тому працюємо з буфером

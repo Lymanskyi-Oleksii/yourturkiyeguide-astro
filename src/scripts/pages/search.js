@@ -363,34 +363,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// Додаткові утиліти
-const FilterUtils = {
-  // Функція для додавання нової картки динамічно
-  addCard: function(cardData) {
-    if (window.excursionFilter) {
-      // Код для додавання картки...
-      window.excursionFilter.refreshCards();
-    }
-  },
-
-  // Функція для програмного встановлення фільтрів
-  setFilters: function(filters) {
-    if (window.excursionFilter) {
-      const filter = window.excursionFilter;
-
-      if (filters.category) filter.categorySelect.value = filters.category;
-      if (filters.duration) filter.durationSelect.value = filters.duration;
-      if (filters.priceFrom) filter.priceFromInput.value = filters.priceFrom;
-      if (filters.priceTo) filter.priceToInput.value = filters.priceTo;
-      if (filters.search) filter.searchInput.value = filters.search;
-
-      filter.updateFilters();
-      filter.performFilter();
-    }
-  },
-
-  // Функція для отримання поточного стану фільтрів
-  getFilterState: function() {
-    return window.excursionFilter ? window.excursionFilter.filterState : null;
-  }
-};

@@ -1,43 +1,79 @@
-# Astro Starter Kit: Minimal
+# TravelsTurkey — сайт гіда по Туреччині
+
+Сайт ліцензованого гіда Фирата Дінлера: індивідуальні, групові й авторські екскурсії по Стамбулу та Туреччині, яхти, трансфер, медичний туризм, шопінг. Аудиторія — російськомовні туристи, тому інтерфейс сайту російською.
+
+- Сайт статичний, зібраний на [Astro](https://astro.build) 7.
+- Бронювання — через WhatsApp і Telegram (готове повідомлення з назвою туру).
+- Відгуки зберігаються у Firebase Firestore і з'являються на сайті після модерації.
+- Адреса: https://yourturkiyeguide-astro.vercel.app
+
+## Запуск локально
+
+Потрібен Node.js **22.12 або новіший**.
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev       # сервер розробки: http://localhost:4321
+npm run build     # збирання в dist/ (перед ним автоматично генеруються зменшені фото)
+npm run preview   # перегляд зібраного сайту
+npm run images    # лише згенерувати зменшені фото
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Як улаштовані папки
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```
+src/
+  pages/                      сторінки; адреса = шлях до файлу
+    excursions/[section]/[slug].astro   один шаблон для всіх сторінок турів
+    sitemap.xml.ts, robots.txt.ts       генеруються при збиранні
+  content/tours/*.md          дані й тексти турів (один файл — один тур)
+  content.config.ts           схема даних туру (перевіряється при збиранні)
+  components/                 шапка, футер, картки; components/tour/ — блоки сторінки туру
+  layouts/BaseLayout.astro    спільний каркас сторінки, SEO-теги
+  data/site.ts                назва бренду, телефон, email, посилання на месенджери
+  data/tours.ts               доступ до турів для списків, головної і відгуків
+  styles/                     CSS; base.css, tour.css тощо — збірки у потрібному порядку
+  scripts/                    JS (галерея, карусель, фільтр, відгуки, Firebase)
+public/                       файли як є: фото (assets/img), іконки, og-cover.jpg
+scripts/make-image-variants.mjs   генерує мініатюри thumbs/ і medium/ для фото
+docs/PLAN.md                  план виправлень і що з нього зроблено
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Контакти й назва бренду змінюються в одному місці — `src/data/site.ts`. Адреса сайту — у полі `site` файлу `astro.config.mjs`; звідти її беруть canonical, sitemap, robots.txt і картинка для прев'ю.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Як додати новий тур
 
-Any static assets, like images, can be placed in the `public/` directory.
+1. Покласти фото в `public/assets/img/<папка>/` з назвами `1.webp`, `2.webp`, … (мініатюри згенеруються самі при збиранні).
+2. Скопіювати будь-який файл із `src/content/tours/` під новою назвою, наприклад `kapadokya-2.md`. Назва файлу стане адресою: `/excursions/<section>/kapadokya-2`.
+3. Заповнити поля в шапці файлу (опис кожного поля — у `src/content.config.ts`), а вступний текст написати під шапкою звичайним текстом.
+   - `section`: `personalised` (індивідуальні) або `copyright` (авторські);
+   - `order`: місце в списку;
+   - `gallery.folder` і `gallery.count`: папка з фото і їх кількість;
+   - `whatsappText`: текст повідомлення для WhatsApp звичайними словами;
+   - у полях програми, умов і місця зустрічі можна писати `<br>` і `<span class="highlight">…</span>`.
+4. Якщо в туру буде своя категорія відгуків (`ratingCategory`), додати її в правила Firestore (див. нижче).
+5. `npm run build`: якщо якесь поле пропущене, збирання зупиниться і покаже, в якому файлі.
 
-## 🧞 Commands
+Тур сам з'явиться у списку свого розділу, у sitemap і у підписах відгуків.
 
-All commands are run from the root of the project, from a terminal:
+## Відгуки
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Відгук пише відвідувач на сторінці туру або на `/reviews`. У Firestore він потрапляє з `verified: false` і на сайті не показується, доки його не схвалять.
 
-## 👀 Want to learn more?
+**Як схвалити.** Firebase Console → Firestore Database → колекція `reviews` → знайти документи з `verified == false` → змінити поле на `true` (або видалити документ, якщо це спам). Сайт кешує відгуки в браузері на 5 хвилин, тож новий відгук з'явиться не миттєво.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+**Категорії відгуків.** Категорія — це поле `ratingCategory` туру (і `general` для загальних відгуків). Правила Firestore дозволяють лише перелічені категорії, тому нову категорію треба дописати в список `d.category in [...]` у правилах.
+
+## Розгортання
+
+- **Сайт** розгортається на Vercel: він виконує `npm run build` і публікує папку `dist/`.
+- **Правила Firestore** зараз зберігаються лише у Firebase Console (Firestore → Rules); їх текст — у `docs/PLAN.md`, пункт 1.3. Змінювати там же, перед публікацією перевіряти в Rules Playground.
+- Ключ Firebase у `src/scripts/firebase-init.js` публічний за задумом: доступ обмежують правила Firestore і App Check, а не секретність ключа.
+
+## Домовленості в коді
+
+- Мова інтерфейсу — російська, коментарі в коді — українською.
+- Стилі й скрипти лежать у `src/`, а не в `public/`: Astro їх мініфікує і дає назви з хешем, тож після оновлення браузер не показує старі версії.
+- Порядок CSS-файлів важливий: якщо сторінці потрібно кілька файлів, вони підключаються через збірку в `src/styles/*.css` (`@import` у потрібному порядку).
+- Властивість із префіксом пишеться **перед** стандартною (`-webkit-backdrop-filter`, потім `backdrop-filter`), інакше мініфікатор викине стандартну.
+- Перед комітом — `npm run build`.

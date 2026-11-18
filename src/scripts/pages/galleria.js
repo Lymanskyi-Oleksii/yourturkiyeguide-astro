@@ -715,13 +715,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Додаткова оптимізація: пауза при зміні вкладки
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    // Можна додати логіку паузи анімацій
-  }
-});
-
 // Обробка зміни орієнтації на мобільних
 window.addEventListener('orientationchange', function() {
   if (isMobile) {
