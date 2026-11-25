@@ -58,7 +58,7 @@ conditions:
     text: можно <span class="highlight">в заказе до предоплаты</span>
 booking:
   duration: 5 часов наслаждения
-  format: 1-6 человек - Семейный
+  format: 1-6 человек — Семейный
   method: На автомобиле с интересными остановками
   price: €240
   priceNote: за 1–6 человек, независимо от числа участников

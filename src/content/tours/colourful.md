@@ -50,7 +50,7 @@ conditions:
     text: можно <span class="highlight">в заказе до предоплаты</span>
 booking:
   duration: 3,5 часа наслаждения
-  format: 1-6 человек - Семейный
+  format: 1-6 человек — Семейный
   method: Пешком с интересными остановками
   price: €155
   priceNote: за 1–6 человек, независимо от числа участников
