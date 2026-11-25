@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# вхідні матеріали для нових турів (текст, фото до обробки)
+_incoming/
