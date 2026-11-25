@@ -12,13 +12,25 @@
   will-change: transform, opacity;
 }
 
+/* Вступний текст під заголовком — однаковий на personalised, copyright і group */
 .tours-section p {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #4a5a6a;
   line-height: 1.6;
   font-weight: 400;
+  max-width: 760px;
+  margin: 0 auto;
   animation: slideUp 0.8s ease-out 0.2s both;
   will-change: transform, opacity;
+}
+
+.tours-section p + p {
+  margin-top: 12px;
+}
+
+.tours-section a {
+  color: #2980b9;
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {
@@ -26,7 +38,7 @@
     font-size: 2rem;
   }
   .tours-section p {
-    font-size: 1.3rem;
+    font-size: 1.05rem;
   }
 }
 
